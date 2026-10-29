@@ -64,12 +64,22 @@ table.t td{border-bottom:1px solid var(--line);padding:10px;vertical-align:top}
 .tabla{overflow-x:auto}
 .boton{display:inline-block;background:var(--blue);color:#fff;text-decoration:none;font-weight:700;border-radius:10px;padding:12px 20px;margin-top:10px}
 footer{padding:28px 0 40px;color:var(--muted);font-size:13px}
+/* qué sí, qué no y por qué */
+.regla{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:8px;margin-bottom:8px}
+.regla>div{border-radius:10px;padding:10px 14px;font-size:15px;line-height:1.4}
+.regla .si{background:var(--green-soft);border-left:5px solid var(--green)}
+.regla .no{background:var(--red-soft);border-left:5px solid var(--red)}
+.regla .pq{background:#fff;border:1px solid var(--line)}
+.regla.cabeza>div{background:none;border:0;padding:0 14px;font-weight:700}
+@media(max-width:820px){.regla{grid-template-columns:1fr;gap:4px;margin-bottom:14px}.regla.cabeza{display:none}
+  .regla .si::before{content:"Sí: ";font-weight:700;color:var(--green)}.regla .no::before{content:"No: ";font-weight:700;color:var(--red)}
+  .regla .pq::before{content:"Por qué: ";font-weight:700;color:var(--navy)}}
 </style>
 </head>
 <body>
 <nav class="menu" aria-label="Secciones">
   <a href="#negocio">El negocio</a><a href="#problema">El problema</a><a href="#causas">Causas</a><a href="#perdidas">Lo que se pierde</a>
-  <a href="#solucion">La solución</a><a href="#ruta">Las 4 sesiones</a><a href="#evaluacion">Evaluación</a><a href="#formacion">Lo que te llevas</a><a href="#empezar">Para empezar</a>
+  <a href="#solucion">La solución</a><a href="#trabajo">Qué sí y qué no</a><a href="#ruta">Las 4 sesiones</a><a href="#evaluacion">Evaluación</a><a href="#formacion">Lo que te llevas</a><a href="#empezar">Para empezar</a>
 </nav>
 
 <header><div class="wrap">
@@ -153,6 +163,23 @@ footer{padding:28px 0 40px;color:var(--muted);font-size:13px}
     <tr><td>Capacidad fija y costo</td><td><b>La nube</b>: BigQuery + Looker Studio o Power BI</td><td>Consulta los 19,9 millones de viajes sin servidores propios, pagando por los datos leídos, y lleva la respuesta a la gerencia</td><td>Vie 6 y sáb 7</td></tr>
     <tr><td>Calidad</td><td>Todas</td><td>Reglas de limpieza aplicadas al mes completo, no a una muestra</td><td>Todas las sesiones</td></tr>
   </table></div>
+</div></section>
+
+<section id="trabajo"><div class="wrap">
+  <h2>Cómo vamos a trabajar: qué sí, qué no y por qué</h2>
+  <p class="sub">En la empresa, el analista no construye la plataforma: la usa, la mide y decide con ella. Se explica en la Sesión 1.</p>
+  <div class="regla cabeza"><div style="color:var(--green)">Sí haremos</div><div style="color:var(--red)">No haremos</div><div style="color:var(--navy)">Por qué</div></div>
+  <div class="regla"><div class="si">Ejecutar con el mes completo los procesos ya preparados</div><div class="no">Instalar Hadoop, Spark o Kafka, ni montar servidores</div><div class="pq">En la empresa eso lo hacen ingeniería de datos o el proveedor de nube; el codespace ya lo trae listo</div></div>
+  <div class="regla"><div class="si"><b>Configurar:</b> cambiar memoria, núcleos o particiones y medir el efecto (RA1, RA4)</div><div class="no">Configurar un clúster desde cero</div><div class="pq">Configurar, aquí, es ajustar un sistema que ya funciona y demostrar con mediciones que mejoró</div></div>
+  <div class="regla"><div class="si">Poner a andar el flujo en tiempo real con la app de viajes y comprobar que no pierde eventos (RA3)</div><div class="no">Programar productores y consumidores desde cero</div><div class="pq">El analista necesita saber si el flujo es confiable y exacto, no escribir su código</div></div>
+  <div class="regla"><div class="si">Leer el código y explicar qué hace cada parte</div><div class="no">Escribir o depurar programas</div><div class="pq">Basta entender cómo trabaja la herramienta para saber qué pedirle y qué esperar de ella</div></div>
+  <div class="regla"><div class="si">Consultar con SQL y armar el tablero (Spark, BigQuery, Looker Studio o Power BI)</div><div class="no">Programar en Java o Scala</div><div class="pq">SQL y el tablero son las herramientas diarias del analista</div></div>
+  <div class="regla"><div class="si">Comparar tiempo, costo y exactitud, y recomendar una tecnología (RA2)</div><div class="no">Memorizar comandos</div><div class="pq">Eso es lo que se evalúa: la decisión justificada con sus propias cifras</div></div>
+  <div class="grid g2" style="margin-top:12px">
+    <div class="card"><h3>¿Y el tiempo?</h3><p>Las horas de clase son las mismas. La máquina tarda lo mismo con o sin programar: cada job de Hadoop con el mes completo tarda entre 2,5 y 4,5 minutos. Lo que no se pierde corrigiendo comillas o sangrías se usa en interpretar y decidir.</p></div>
+    <div class="card"><h3>¿Cómo se trabaja?</h3><p>Cada comando se copia de la guía, un recuadro a la vez. La guía muestra la salida que debe aparecer y qué hacer si algo falla.</p></div>
+  </div>
+  <div class="banda">Lo que se evalúa es la decisión que tomas con los datos, no escribir código.</div>
 </div></section>
 
 <section id="ruta"><div class="wrap">
