@@ -2,7 +2,7 @@
 
 Especialización en Analítica de Datos · Universidad Rafael Núñez
 
-**Página:** https://hmedrano-gif.github.io/curn/tpd/
+**Página:** https://hmedrano-gif.github.io/CURN/tpd/
 
 ¿Dónde y cuándo se gana o se pierde dinero en el transporte por aplicación, y cómo se reacciona a tiempo?
 El caso: 19,9 millones de viajes de Uber y Lyft en Nueva York (junio de 2025), US$ 556,9 millones de tarifa base en un mes.
