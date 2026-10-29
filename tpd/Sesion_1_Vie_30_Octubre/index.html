@@ -170,9 +170,72 @@ table.t td{border-bottom:1px solid var(--line);padding:8px;vertical-align:top}
     <div style="opacity:.85">Especialización en Analítica de Datos · Tecnologías de Procesamiento de Datos</div>
     <h1 style="margin-top:28px">Unidad 1: Fundamentos del Procesamiento Distribuido</h1>
     <div style="margin-top:10px;font-style:italic;opacity:.9">Sesión 1 · Viernes 30 de octubre · 5:00–9:00 p. m.</div>
+    <div style="margin-top:6px;font-weight:600">Docente: Heyder Medrano</div>
     <div class="pre">¿Se les ha congelado alguna vez una consulta, un script o un reporte cuando la tabla pasó de 5 o 10 millones de filas? ¿Qué hicieron?</div>
     <p style="margin-top:28px;opacity:.8;font-size:14px">Avanza con las flechas ← →, con los botones de abajo o deslizando en el celular.</p>
   </div>
+</section>
+
+<!-- 1b -->
+<section class="slide" data-titulo="Presentación del programa" data-grupo="Apertura">
+  <h2>Tecnologías de Procesamiento de Datos</h2>
+  <div class="sub">Especialización en Analítica de Datos · 3 créditos · 4 sesiones presenciales · Docente: Heyder Medrano</div>
+  <div class="grid g4">
+    <div><div class="cab navy">Sesión 1 · Vie 30 oct<small style="display:block;font-weight:400">5:00–9:00 p. m. · Unidad 1</small></div><div class="cuerpo" style="background:#fff;border:1px solid var(--line)">Fundamentos del procesamiento distribuido: CAP, MapReduce, HDFS y YARN. <b>Hoy.</b></div></div>
+    <div><div class="cab blue">Sesión 2 · Sáb 31 oct<small style="display:block;font-weight:400">8:00 a. m.–4:00 p. m. · Unidades 1 y 3</small></div><div class="cuerpo" style="background:#fff;border:1px solid var(--line)">Taller 1A Hadoop y Spark con el mes completo; arranca el Proyecto Final; Taller 1B Kafka en tiempo real.</div></div>
+    <div><div class="cab amber">Sesión 3 · Vie 6 nov<small style="display:block;font-weight:400">5:00–9:00 p. m. · Unidad 2</small></div><div class="cuerpo" style="background:#fff;border:1px solid var(--line)">La nube: AWS, Azure y Google Cloud, costos, seguridad y normativa; análisis de casos.</div></div>
+    <div><div class="cab green">Sesión 4 · Sáb 7 nov<small style="display:block;font-weight:400">8:00 a. m.–4:00 p. m. · Unidades 2 y 3</small></div><div class="cuerpo" style="background:#fff;border:1px solid var(--line)">Taller 2 en BigQuery y tablero; optimización; sustentaciones y examen práctico.</div></div>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card"><b>Evaluación</b>
+      <ul class="p">
+        <li><b>Proyecto Final</b>: diseño y configuración de un sistema distribuido · arranca sáb 31, se sustenta sáb 7</li>
+        <li><b>Taller práctico</b>: flujo de datos en tiempo real con Spark · sáb 31</li>
+        <li><b>Análisis de casos</b>: selección de tecnologías para un problema empresarial · vie 6, se sustenta sáb 7</li>
+        <li><b>Simulación en la nube</b> (Taller 2) y <b>examen práctico</b> · sáb 7</li>
+      </ul></div>
+    <div class="card"><b>Lo que te llevas</b>
+      <ul class="p">
+        <li><span class="chip">RA1</span> Configurar Hadoop o Spark para procesar un mes completo</li>
+        <li><span class="chip">RA2</span> Seleccionar la nube adecuada con criterios de costo, seguridad y normativa</li>
+        <li><span class="chip">RA3</span> Desarrollar un flujo en tiempo real con Kafka que no pierde eventos</li>
+        <li><span class="chip">RA4</span> Ajustar memoria, núcleos y particiones y demostrarlo con mediciones</li>
+      </ul></div>
+  </div>
+  <div class="banda">Un solo caso de principio a fin: 19,9 millones de viajes reales de Uber y Lyft en Nueva York. Cada sesión responde una parte de la misma pregunta de negocio.</div>
+</section>
+
+<!-- 1c -->
+<section class="slide" data-titulo="Cómo vamos a trabajar" data-grupo="Apertura">
+  <h2>Cómo vamos a trabajar: qué sí, qué no y por qué</h2>
+  <div class="sub">En la empresa, el analista no construye la plataforma: la usa, la mide y decide con ella</div>
+  <div class="regla cabeza"><div style="color:var(--green)">Sí haremos</div><div style="color:var(--red)">No haremos</div><div style="color:var(--navy)">Por qué</div></div>
+  <div class="regla"><div class="si">Ejecutar con el mes completo los procesos ya preparados</div><div class="no">Instalar Hadoop, Spark o Kafka, ni montar servidores</div><div class="pq">En la empresa eso lo hacen ingeniería de datos o el proveedor de nube; el codespace ya lo trae listo</div></div>
+  <div class="regla"><div class="si"><b>Configurar:</b> cambiar memoria, núcleos o particiones y medir el efecto (RA1, RA4)</div><div class="no">Configurar un clúster desde cero</div><div class="pq">Configurar, aquí, es ajustar un sistema que ya funciona y demostrar con mediciones que mejoró</div></div>
+  <div class="regla"><div class="si">Poner a andar el flujo en tiempo real con la app de viajes y comprobar que no pierde eventos (RA3)</div><div class="no">Programar productores y consumidores desde cero</div><div class="pq">El analista necesita saber si el flujo es confiable y exacto, no escribir su código</div></div>
+  <div class="regla"><div class="si">Leer el código y explicar qué hace cada parte</div><div class="no">Escribir o depurar programas</div><div class="pq">Basta entender cómo trabaja la herramienta para saber qué pedirle y qué esperar de ella</div></div>
+  <div class="regla"><div class="si">Consultar con SQL y armar el tablero (Spark, BigQuery, Looker Studio o Power BI)</div><div class="no">Programar en Java o Scala</div><div class="pq">SQL y el tablero son las herramientas diarias del analista</div></div>
+  <div class="regla"><div class="si">Comparar tiempo, costo y exactitud, y recomendar una tecnología (RA2)</div><div class="no">Memorizar comandos</div><div class="pq">Eso es lo que se evalúa: la decisión justificada con sus propias cifras</div></div>
+  <div class="grid g2" style="margin-top:10px">
+    <div class="card"><b>¿Y el tiempo?</b> Las horas son las mismas. La máquina tarda lo mismo con o sin programar (cada job de Hadoop con el mes completo, entre 2,5 y 4,5 minutos). Lo que no se pierde corrigiendo comillas o sangrías se usa en interpretar y decidir.</div>
+    <div class="card"><b>¿Cómo se trabaja?</b> Cada comando se copia de la guía, un recuadro a la vez. La guía muestra la salida que debe aparecer y qué hacer si algo falla.</div>
+  </div>
+  <div class="banda">Su papel es el de analista: lo que se evalúa es la decisión que toman con los datos, no escribir código.</div>
+</section>
+
+<!-- 1d -->
+<section class="slide" data-titulo="Lo que necesitas" data-grupo="Apertura">
+  <h2>Lo que necesitas para trabajar</h2>
+  <div class="sub">Dónde está todo, qué se entrega y cómo cuidar el entorno</div>
+  <div class="grid g3">
+    <div class="card"><b>📁 Materiales</b><br>Todo está en <b>github.com/hmedrano-gif/CURN</b>: una carpeta por sesión con la presentación, la guía del taller y los PDF. La presentación se abre con el enlace ▶ de cada carpeta.</div>
+    <div class="card"><b>✅ Preparación Previa</b><br>Antes del sábado 31 a las 8:00 a. m.: crear el codespace y correr el verificador hasta ver «LISTO para el Taller 1». A las 8:00 no se instala nada.</div>
+    <div class="card"><b>📓 Bitácora</b><br>En cada taller anotan sus mediciones: tiempos, memoria, núcleos, eventos por segundo. Son la evidencia para comparar tecnologías y para sustentar.</div>
+    <div class="card"><b>💻 Cuidar el codespace</b><br>La cuenta gratuita de GitHub trae horas limitadas al mes. Al terminar cada taller, detengan el codespace desde github.com/codespaces; encendido sigue gastando la cuota.</div>
+    <div class="card"><b>🎯 Proyecto Final</b><br>Diseñar y configurar un sistema distribuido que responda una pregunta del caso con el mes completo, y justificar la decisión con sus mediciones. Arranca el sábado 31 a las 11:00 y se sustenta el sábado 7.</div>
+    <div class="card"><b>📖 Glosario técnico</b><br>En la carpeta de la Sesión 1: HDFS, YARN, shuffle, partición y los demás términos, explicados en lenguaje sencillo. Úsenlo cuando una palabra no les resulte clara.</div>
+  </div>
+  <div class="banda">Todo queda en GitHub: si alguien falta o se pierde, la carpeta de la sesión tiene lo necesario para ponerse al día.</div>
 </section>
 
 <!-- 2 -->
@@ -378,7 +441,7 @@ table.t td{border-bottom:1px solid var(--line);padding:8px;vertical-align:top}
     <div class="cab navy" style="border-radius:8px;text-align:center">Bloque 3</div>
   </div>
   <div class="grid g4" style="margin-top:12px">
-    <div class="card"><b>5:00–5:30 · Apertura</b><p>El problema del caso, el objetivo del ejercicio, por qué la nube, las herramientas y cómo vamos a trabajar</p></div>
+    <div class="card"><b>5:00–5:30 · Apertura</b><p>El programa y cómo vamos a trabajar, el problema del caso, el objetivo del ejercicio, por qué la nube y las herramientas</p></div>
     <div class="card"><b>5:30–6:30 · Procesamiento distribuido</b><p>Escalar, teorema CAP, consistencia, particionamiento y replicación</p></div>
     <div class="card"><b>6:45–8:00 · Modelo MapReduce</b><p>Map → Shuffle → Reduce, la actividad a mano y por qué existe Spark</p></div>
     <div class="card"><b>8:00–9:00 · Ecosistema Hadoop</b><p>HDFS, YARN, el ecosistema y los trade-offs de diseño</p></div>
@@ -403,23 +466,6 @@ table.t td{border-bottom:1px solid var(--line);padding:8px;vertical-align:top}
   <p class="nota" style="margin-top:10px">También existen (para ubicarse, no se practican): Databricks · Amazon EMR · Azure Synapse · Snowflake · Cloudera · Apache Flink · Amazon Kinesis · Google Pub/Sub. Los conceptos de hoy sirven para todas.</p>
 </section>
 
-<!-- 7b -->
-<section class="slide" data-titulo="Cómo vamos a trabajar" data-grupo="Apertura">
-  <h2>Cómo vamos a trabajar: qué sí, qué no y por qué</h2>
-  <div class="sub">En la empresa, el analista no construye la plataforma: la usa, la mide y decide con ella</div>
-  <div class="regla cabeza"><div style="color:var(--green)">Sí haremos</div><div style="color:var(--red)">No haremos</div><div style="color:var(--navy)">Por qué</div></div>
-  <div class="regla"><div class="si">Ejecutar con el mes completo los procesos ya preparados</div><div class="no">Instalar Hadoop, Spark o Kafka, ni montar servidores</div><div class="pq">En la empresa eso lo hacen ingeniería de datos o el proveedor de nube; el codespace ya lo trae listo</div></div>
-  <div class="regla"><div class="si"><b>Configurar:</b> cambiar memoria, núcleos o particiones y medir el efecto (RA1, RA4)</div><div class="no">Configurar un clúster desde cero</div><div class="pq">Configurar, aquí, es ajustar un sistema que ya funciona y demostrar con mediciones que mejoró</div></div>
-  <div class="regla"><div class="si">Poner a andar el flujo en tiempo real con la app de viajes y comprobar que no pierde eventos (RA3)</div><div class="no">Programar productores y consumidores desde cero</div><div class="pq">El analista necesita saber si el flujo es confiable y exacto, no escribir su código</div></div>
-  <div class="regla"><div class="si">Leer el código y explicar qué hace cada parte</div><div class="no">Escribir o depurar programas</div><div class="pq">Basta entender cómo trabaja la herramienta para saber qué pedirle y qué esperar de ella</div></div>
-  <div class="regla"><div class="si">Consultar con SQL y armar el tablero (Spark, BigQuery, Looker Studio o Power BI)</div><div class="no">Programar en Java o Scala</div><div class="pq">SQL y el tablero son las herramientas diarias del analista</div></div>
-  <div class="regla"><div class="si">Comparar tiempo, costo y exactitud, y recomendar una tecnología (RA2)</div><div class="no">Memorizar comandos</div><div class="pq">Eso es lo que se evalúa: la decisión justificada con sus propias cifras</div></div>
-  <div class="grid g2" style="margin-top:10px">
-    <div class="card"><b>¿Y el tiempo?</b> Las horas son las mismas. La máquina tarda lo mismo con o sin programar (cada job de Hadoop con el mes completo, entre 2,5 y 4,5 minutos). Lo que no se pierde corrigiendo comillas o sangrías se usa en interpretar y decidir.</div>
-    <div class="card"><b>¿Cómo se trabaja?</b> Cada comando se copia de la guía, un recuadro a la vez. La guía muestra la salida que debe aparecer y qué hacer si algo falla.</div>
-  </div>
-  <div class="banda">Su papel es el de Sofía, la analista: lo que se evalúa es la decisión que toman con los datos, no escribir código.</div>
-</section>
 
 <!-- 8 -->
 <section class="slide" data-titulo="Bloque 1" data-grupo="Bloque 1 · Procesamiento distribuido">
