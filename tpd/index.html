@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tecnologías de Procesamiento de Datos</title>
+<meta name="description" content="Presentación de Tecnologías de Procesamiento de Datos · Especialización en Analítica de Datos · Universidad Rafael Núñez">
+<style>
+:root{--navy:#1B2A4A;--blue:#2F6DB5;--blue-soft:#DCE6F4;--amber:#9A5B00;--amber-soft:#FBEBD0;--red:#A33A2C;--red-soft:#F6DEDA;
+  --green:#2E7D4F;--green-soft:#DDEFE3;--bg:#F3F2F1;--line:#C9CED8;--text:#252423;--muted:#605E5C;
+  --serif:Cambria,"Iowan Old Style",Georgia,serif;--sans:"Segoe UI",Calibri,system-ui,-apple-system,Roboto,sans-serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.5}
+a{color:var(--blue)}
+nav.menu{position:sticky;top:0;z-index:10;background:var(--navy);display:flex;gap:4px;overflow-x:auto;padding:0 16px}
+nav.menu a{color:#fff;opacity:.8;text-decoration:none;padding:12px 10px;font-size:14px;white-space:nowrap}
+nav.menu a:hover{opacity:1;background:rgba(255,255,255,.1)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+header{background:var(--navy);color:#fff;padding:48px 0 56px}
+.u{letter-spacing:.16em;font-size:13px;opacity:.75}
+h1{font-family:var(--serif);font-size:clamp(32px,5vw,54px);line-height:1.1;margin:12px 0}
+h2{font-family:var(--serif);color:var(--navy);font-size:clamp(26px,3.2vw,36px);margin:0 0 6px}
+h3{margin:0 0 6px;color:var(--navy)}
+.pregunta{font-size:clamp(19px,2.3vw,25px);border-left:4px solid #8FB3E6;padding-left:16px;margin-top:22px;font-style:italic}
+nav.menu{scrollbar-width:none}nav.menu::-webkit-scrollbar{display:none}
+section{scroll-margin-top:44px;padding:44px 0;border-bottom:1px solid var(--line)}
+.sub{color:var(--muted);font-style:italic;margin:0 0 20px}
+.grid{display:grid;gap:14px}.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:820px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.kpi b{display:block;font-family:var(--serif);font-size:clamp(26px,3.2vw,38px);color:var(--navy);line-height:1.15}
+.kpi span{color:var(--muted);font-size:14px}
+.reloj{background:var(--navy);color:#fff;border-radius:14px;padding:22px;text-align:center;margin-top:16px}
+.reloj b{font-family:var(--serif);font-size:clamp(34px,6vw,56px);display:block;font-variant-numeric:tabular-nums}
+.causa{border-top:5px solid var(--amber)}
+.causa .n{font-family:var(--serif);font-size:28px;color:var(--amber);font-weight:700}
+.perdida{border-top:5px solid var(--red)}
+.perdida b.m{font-family:var(--serif);font-size:clamp(28px,3.4vw,40px);color:var(--red);display:block;line-height:1.1}
+.nota{font-size:13px;color:var(--muted)}
+.banda{background:var(--navy);color:#fff;border-radius:12px;padding:16px 20px;font-weight:600;margin-top:20px}
+.banda.amb{background:var(--amber-soft);color:var(--amber)}
+/* barra de reparto */
+.reparto{display:flex;height:46px;border-radius:10px;overflow:hidden;margin:10px 0 6px;font-weight:700;color:#fff;font-size:14px}
+.reparto div{display:flex;align-items:center;justify-content:center;white-space:nowrap;overflow:hidden}
+.sel{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.sel button{font:inherit;border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;cursor:pointer;color:var(--navy);font-weight:600}
+.sel button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+/* ruta */
+.ruta{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:820px){.ruta{grid-template-columns:1fr}}
+.ses{font:inherit;text-align:left;border:2px solid var(--line);background:#fff;border-radius:12px;padding:0;cursor:pointer;overflow:hidden}
+.ses .h{color:#fff;padding:12px 14px}.ses .h b{display:block;font-size:19px;font-family:var(--serif)}
+.ses .c{padding:10px 14px;font-size:14px}
+.ses.on{border-color:var(--navy);box-shadow:0 4px 14px rgba(0,0,0,.14)}
+.detalle{background:#fff;border:1px solid var(--line);border-left:6px solid var(--blue);border-radius:12px;padding:18px 20px;margin-top:12px}
+.detalle table{width:100%;border-collapse:collapse;font-size:14px}
+.detalle td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.detalle td:first-child{white-space:nowrap;color:var(--navy);font-weight:600;width:120px}
+.chip{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:700;margin:2px;background:var(--blue-soft);color:var(--navy)}
+table.t{width:100%;border-collapse:collapse;background:#fff;font-size:14px;border-radius:12px;overflow:hidden}
+table.t th{background:var(--navy);color:#fff;text-align:left;padding:10px}
+table.t td{border-bottom:1px solid var(--line);padding:10px;vertical-align:top}
+.tabla{overflow-x:auto}
+.boton{display:inline-block;background:var(--blue);color:#fff;text-decoration:none;font-weight:700;border-radius:10px;padding:12px 20px;margin-top:10px}
+footer{padding:28px 0 40px;color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<nav class="menu" aria-label="Secciones">
+  <a href="#negocio">El negocio</a><a href="#problema">El problema</a><a href="#causas">Causas</a><a href="#perdidas">Lo que se pierde</a>
+  <a href="#solucion">La solución</a><a href="#ruta">Las 4 sesiones</a><a href="#evaluacion">Evaluación</a><a href="#formacion">Lo que te llevas</a><a href="#empezar">Para empezar</a>
+</nav>
+
+<header><div class="wrap">
+  <div class="u">UNIVERSIDAD RAFAEL NÚÑEZ · ESPECIALIZACIÓN EN ANALÍTICA DE DATOS</div>
+  <h1>Tecnologías de Procesamiento de Datos</h1>
+  <div style="opacity:.85">3 créditos · 4 sesiones presenciales · 30 y 31 de octubre, 6 y 7 de noviembre</div>
+  <div class="pregunta">¿Dónde y cuándo se gana o se pierde dinero en el transporte por aplicación, y cómo se reacciona a tiempo?</div>
+</div></header>
+
+<section id="negocio"><div class="wrap">
+  <h2>El negocio que vamos a analizar</h2>
+  <p class="sub">Todos los viajes de Uber y Lyft en Nueva York en junio de 2025, publicados por la Comisión de Taxis y Limusinas (TLC). Cifras calculadas con el archivo completo.</p>
+  <div class="grid g4">
+    <div class="card kpi"><b>US$ 556,9 M</b><span>de tarifa base cobrada en un solo mes</span></div>
+    <div class="card kpi"><b>19.868.009</b><span>viajes · 4,04 GB · 25 datos por viaje</span></div>
+    <div class="card kpi"><b>US$ 429,9 M</b><span>pagados a los conductores (77,2 %)</span></div>
+    <div class="card kpi"><b>US$ 127,0 M</b><span>retenidos por las plataformas (22,8 %)</span></div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>¿Cómo se reparte cada dólar de tarifa?</h3>
+    <div class="sel" id="selEmp"><button class="on" data-e="Total">Las dos</button><button data-e="Uber">Uber</button><button data-e="Lyft">Lyft</button></div>
+    <div class="reparto"><div id="rCond" style="background:var(--green)"></div><div id="rPlat" style="background:var(--navy)"></div></div>
+    <p id="rTxt" style="margin:4px 0 0"></p>
+    <p class="nota">Plataforma = tarifa base menos pago al conductor (aproximación: no incluye peajes, impuestos ni propinas).</p>
+  </div>
+  <div class="reloj">
+    <div style="opacity:.8">Tarifas cobradas en Nueva York desde que abriste esta página (promedio del mes)</div>
+    <b id="reloj">US$ 0</b>
+    <div style="opacity:.8">≈ US$ 12.900 por minuto · ≈ 460 viajes por minuto, día y noche</div>
+  </div>
+</div></section>
+
+<section id="problema"><div class="wrap">
+  <h2>El problema</h2>
+  <p class="sub">La gerencia necesita dos respuestas, y las necesita completas, exactas y a tiempo</p>
+  <div class="grid g2">
+    <div class="card" style="border-top:5px solid var(--navy)"><h3>Pregunta 1 · con el mes completo</h3>
+      <p style="font-size:18px;font-weight:600">¿Cuántos viajes hizo cada empresa, cuánto cobró, cuánto pagó a sus conductores y qué parte se quedó la plataforma?</p>
+      <p class="nota">Es la pregunta de rentabilidad. Con ella, Parrott y Reich (2018) sustentaron ante la TLC el pago mínimo para los conductores, vigente desde 2019: un análisis de datos que cambió las reglas de un negocio de miles de millones.</p></div>
+    <div class="card" style="border-top:5px solid var(--amber)"><h3>Pregunta 2 · mientras ocurre</h3>
+      <p style="font-size:18px;font-weight:600">¿En qué zonas están esperando más los pasajeros y cuánto ingresa cada empresa, minuto a minuto?</p>
+      <p class="nota">Es la pregunta de reacción: si la espera sube en una zona, se mueven conductores o se ajusta el precio antes de que el pasajero se vaya.</p></div>
+  </div>
+  <div class="banda">El problema no es la falta de datos: los datos existen. El problema es que, con las herramientas de un solo computador, no se pueden convertir en decisiones a tiempo.</div>
+</div></section>
+
+<section id="causas"><div class="wrap">
+  <h2>Las causas: por qué hoy no se puede responder</h2>
+  <p class="sub">Cuatro causas que vas a comprobar con tus propias mediciones</p>
+  <div class="grid g4">
+    <div class="card causa"><div class="n">1</div><h3>Volumen</h3><p>Excel carga como máximo 1.048.576 filas: <b>ve el 5,3 % del mes</b>. Cargar el mes en pandas pediría unos 11 GB de memoria.</p></div>
+    <div class="card causa"><div class="n">2</div><h3>Velocidad</h3><p>Entran unos <b>662.000 viajes al día</b>. Un reporte que se procesa de noche llega cuando la hora pico (6 p. m., 1,13 millones de viajes en el mes) ya pasó.</p></div>
+    <div class="card causa"><div class="n">3</div><h3>Calidad</h3><p><b>231.332 viajes</b> con espera negativa y 12.901 con tarifa en cero o menos. Sin procesar todo, los errores se cuelan en las cifras de la gerencia.</p></div>
+    <div class="card causa"><div class="n">4</div><h3>Capacidad fija</h3><p>Un computador no crece con los datos: <b>un año como junio serían unos 48 GB</b> en CSV. Comprar servidores para el pico deja capacidad ociosa el resto del tiempo.</p></div>
+  </div>
+</div></section>
+
+<section id="perdidas"><div class="wrap">
+  <h2>Lo que se pierde por no responder a tiempo</h2>
+  <p class="sub">Pensado en dinero: lo que cuesta al negocio no ver el mes completo o verlo tarde</p>
+  <div class="grid g3">
+    <div class="card perdida"><b class="m">US$ 12,2 M</b><p><b>en un mes</b>, en 2.895.195 viajes (14,6 %) en los que el pago al conductor superó la tarifa base: la plataforma puso dinero de su bolsillo. Sin procesar los 19,9 millones de viajes no se sabe en qué zonas ni a qué horas ocurre.</p></div>
+    <div class="card perdida"><b class="m">US$ 49,9 M</b><p><b>de tarifa en riesgo</b>: 1.482.132 viajes (7,5 %) esperaron más de 10 minutos. Son los que sí se hicieron; los pasajeros que se cansaron y cancelaron no aparecen en el archivo. Esa es la pérdida que solo se ve en tiempo real.</p></div>
+    <div class="card perdida"><b class="m">US$ 127,0 M</b><p><b>de margen mensual bajo escrutinio</b>: el regulador ya usó estos datos para fijar el pago mínimo. Una empresa que no mide su propio margen, por zona y por hora, negocia y decide a ciegas.</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card"><h3>Dónde se gana</h3><p>La zona que más deja a las plataformas es <b>el aeropuerto LaGuardia: US$ 8,07 M en el mes</b> en 436.708 viajes, seguida de JFK (US$ 5,45 M). Las siguientes ocho son de Manhattan.</p></div>
+    <div class="card"><h3>Cuándo se pierde</h3><p>La peor espera es a las <b>4 a. m. (6,4 minutos en promedio)</b> y el distrito más lento es Staten Island (6,5 minutos). Saberlo un mes después no sirve para mover conductores esta noche.</p></div>
+  </div>
+  <div class="banda amb">Las cifras son reales y salen del archivo del caso. «En riesgo» no es lo mismo que «perdido»: decidir cuánto de ese dinero se puede recuperar es exactamente el trabajo de analista que se practica aquí.</div>
+</div></section>
+
+<section id="solucion"><div class="wrap">
+  <h2>La solución: cada tecnología ataca una causa</h2>
+  <p class="sub">No se estudian herramientas sueltas: cada una entra cuando la anterior se queda corta</p>
+  <div class="tabla"><table class="t">
+    <tr><th>Causa</th><th>Tecnología</th><th>Qué resuelve en el caso</th><th>Cuándo</th></tr>
+    <tr><td>Volumen</td><td><b>Hadoop</b> (HDFS + YARN + MapReduce)</td><td>Reparte el mes en 31 bloques y calcula tarifa, pago y plataforma por empresa con el archivo completo</td><td>Sáb 31 · mañana</td></tr>
+    <tr><td>Volumen y tiempo</td><td><b>Spark</b></td><td>El mismo resultado al centavo, en memoria y más rápido; se mide cuánto ahorra cada núcleo</td><td>Sáb 31 · mañana</td></tr>
+    <tr><td>Velocidad</td><td><b>Kafka + Spark Streaming</b></td><td>Calcula la espera por zona mientras ocurren los viajes, sin perder un solo evento</td><td>Sáb 31 · tarde</td></tr>
+    <tr><td>Capacidad fija y costo</td><td><b>La nube</b>: BigQuery + Looker Studio o Power BI</td><td>Consulta los 19,9 millones de viajes sin servidores propios, pagando por los datos leídos, y lleva la respuesta a la gerencia</td><td>Vie 6 y sáb 7</td></tr>
+    <tr><td>Calidad</td><td>Todas</td><td>Reglas de limpieza aplicadas al mes completo, no a una muestra</td><td>Todas las sesiones</td></tr>
+  </table></div>
+</div></section>
+
+<section id="ruta"><div class="wrap">
+  <h2>Cómo se desarrollan las 4 sesiones</h2>
+  <p class="sub">Haz clic en cada sesión para ver qué se hace, qué se entrega y qué resultado de aprendizaje trabaja</p>
+  <div class="ruta" id="ruta">
+    <button class="ses on" data-s="0"><div class="h" style="background:var(--navy)"><b>Sesión 1</b>Vie 30 oct · 5–9 p. m.</div><div class="c">Unidad 1 · Fundamentos del procesamiento distribuido</div></button>
+    <button class="ses" data-s="1"><div class="h" style="background:var(--blue)"><b>Sesión 2</b>Sáb 31 oct · 8 a. m.–4 p. m.</div><div class="c">Taller 1A Hadoop y Spark · Unidad 3 y Taller 1B Kafka</div></button>
+    <button class="ses" data-s="2"><div class="h" style="background:var(--amber)"><b>Sesión 3</b>Vie 6 nov · 5–9 p. m.</div><div class="c">Unidad 2 · Procesamiento en la nube y análisis de casos</div></button>
+    <button class="ses" data-s="3"><div class="h" style="background:var(--green)"><b>Sesión 4</b>Sáb 7 nov · 8 a. m.–4 p. m.</div><div class="c">Taller 2 en la nube · optimización · sustentaciones</div></button>
+  </div>
+  <div class="detalle" id="detSes"></div>
+</div></section>
+
+<section id="evaluacion"><div class="wrap">
+  <h2>Evaluación</h2>
+  <p class="sub">Estrategias del contenido programático de Tecnologías de Procesamiento de Datos</p>
+  <div class="tabla"><table class="t">
+    <tr><th>Estrategia</th><th>Qué se evalúa</th><th>Arranca</th><th>Se sustenta</th></tr>
+    <tr><td><b>Proyecto final</b>: diseño y configuración de un sistema distribuido</td><td>Configuración del sistema, integración de los datos y rendimiento medido; responde preguntas del caso con el mes completo</td><td>Sáb 31, 11:00 a. m.</td><td>Sáb 7, 2:15 p. m.</td></tr>
+    <tr><td><b>Taller práctico</b>: flujos de datos en tiempo real con Spark</td><td>Que el flujo funcione, que no pierda eventos y que sus cifras sean exactas</td><td>Sáb 31, tarde</td><td>En el taller</td></tr>
+    <tr><td><b>Análisis de casos</b>: selección de tecnologías para un problema empresarial</td><td>Presentación técnica, a nivel ejecutivo, que justifique la solución, su costo y sus beneficios</td><td>Vie 6, 7:30 p. m.</td><td>Sáb 7, 1:30 p. m.</td></tr>
+    <tr><td><b>Simulación</b>: procesamiento de datos masivos en la nube</td><td>El mes completo en Google Cloud: consultas correctas, costo de cada una y tablero para la gerencia (Taller 2)</td><td>Sáb 7, 8:00 a. m.</td><td>En el taller</td></tr>
+    <tr><td><b>Examen práctico</b></td><td>Configuración y monitoreo de un pipeline de datos masivos</td><td>—</td><td>Sáb 7, 2:15 p. m.</td></tr>
+  </table></div>
+</div></section>
+
+<section id="formacion"><div class="wrap">
+  <h2>Lo que te llevas</h2>
+  <p class="sub">Formación de analista que decide con evidencia de tiempo, costo y exactitud</p>
+  <div class="grid g4">
+    <div class="card"><span class="chip">RA1</span><h3>Configurar</h3><p>Un sistema Hadoop o Spark que procesa un mes completo de datos masivos.</p></div>
+    <div class="card"><span class="chip">RA2</span><h3>Seleccionar</h3><p>La herramienta de nube adecuada (AWS, Azure o Google Cloud) con criterios de costo, seguridad y normativa.</p></div>
+    <div class="card"><span class="chip">RA3</span><h3>Desarrollar</h3><p>Un flujo de datos en tiempo real con Kafka que no pierde eventos.</p></div>
+    <div class="card"><span class="chip">RA4</span><h3>Ajustar</h3><p>Memoria, núcleos y particiones para bajar tiempos y costos, y demostrarlo con mediciones.</p></div>
+  </div>
+  <div class="banda">Al terminar, podrás sentarte con una gerencia y decir: esta pregunta se responde con esta tecnología, tarda tanto, cuesta tanto y por esta razón.</div>
+</div></section>
+
+<section id="empezar" style="border-bottom:0"><div class="wrap">
+  <h2>Para empezar</h2>
+  <div class="grid g2">
+    <div class="card"><h3>Sesión 1 · viernes 30 de octubre</h3><p>La presentación interactiva de la Unidad 1: escalar, teorema CAP, MapReduce, HDFS y YARN.</p>
+      <a class="boton" href="Sesion_1_Vie_30_Octubre/">Abrir la Sesión 1 →</a></div>
+    <div class="card"><h3>Antes del sábado 31 a las 8:00 a. m.</h3><p>Hacer la Preparación Previa del Taller 1: crear tu repositorio, abrir tu codespace y dejar el verificador en «LISTO». A las 8:00 a. m. no se instala nada.</p>
+      <a class="boton" href="Sesion_1_Vie_30_Octubre/Preparacion_Previa_Taller1_GitHub_Codespaces.pdf">Preparación Previa (PDF) →</a></div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">Tecnologías de Procesamiento de Datos · Especialización en Analítica de Datos · Universidad Rafael Núñez. Fuentes: TLC, viajes de High Volume FHV de junio de 2025; Parrott y Reich (2018).</div></footer>
+
+<script>
+const $=id=>document.getElementById(id);
+const fmt=n=>n.toLocaleString('es-CO');
+// reparto por empresa (US$ de junio de 2025)
+const R={Total:[556924007.13,429885211.21],Uber:[411920420.29,316067761.82],Lyft:[145003586.84,113817449.39]};
+function reparto(e){const [t,c]=R[e],pc=c/t*100,pp=100-pc;
+  $('rCond').style.width=pc+'%';$('rPlat').style.width=pp+'%';
+  $('rCond').textContent='Conductores '+pc.toFixed(1).replace('.',',')+' %';$('rPlat').textContent='Plataforma '+pp.toFixed(1).replace('.',',')+' %';
+  const m=x=>'US$ '+(x/1e6).toFixed(1).replace('.',',')+' M';
+  $('rTxt').innerHTML=(e==='Total'?'Uber y Lyft':e)+': tarifa base de <b>'+m(t)+'</b>, de los que <b>'+m(c)+'</b> fueron a los conductores y <b>'+m(t-c)+'</b> se quedaron en la plataforma.';
+  document.querySelectorAll('#selEmp button').forEach(b=>b.classList.toggle('on',b.dataset.e===e));}
+document.querySelectorAll('#selEmp button').forEach(b=>b.onclick=()=>reparto(b.dataset.e));reparto('Total');
+// reloj de tarifas: 556.924.007 US$ en 30 días
+const porSeg=556924007.13/(30*24*3600),t0=Date.now();
+setInterval(()=>{$('reloj').textContent='US$ '+fmt(Math.round((Date.now()-t0)/1000*porSeg));},250);
+// sesiones
+const SES=[
+ {c:'var(--navy)',t:'Sesión 1 · Viernes 30 de octubre · 5:00–9:00 p. m. · Unidad 1',f:[
+  ['Pregunta','¿Por qué Excel y un solo computador no alcanzan, y qué cambia cuando el trabajo se reparte entre muchas máquinas?'],
+  ['5:00–5:30','El problema del caso, sus causas, lo que se pierde y por qué la nube'],
+  ['5:30–6:30','Procesamiento distribuido: escalar, teorema CAP, consistencia, particionamiento y réplicas'],
+  ['6:45–8:00','Modelo MapReduce: actividad a mano con 12 viajes reales, combiner y por qué existe Spark'],
+  ['8:00–9:00','Ecosistema Hadoop: HDFS, YARN y los trade-offs de diseño'],
+  ['Te llevas','El marco para evaluar cualquier arquitectura de datos'],
+  ['Trabaja','<span class="chip">RA1</span> fundamentos']]},
+ {c:'var(--blue)',t:'Sesión 2 · Sábado 31 de octubre · 8:00 a. m.–4:00 p. m. · Unidades 1 y 3',f:[
+  ['Pregunta','Pregunta 1 con el mes completo, y pregunta 2 mientras ocurre'],
+  ['Mañana','Taller 1A en GitHub Codespaces: el mes en HDFS (31 bloques), job MapReduce de tarifa, pago y plataforma por empresa; YARN con más memoria; el mismo cálculo en Spark con 1, 2 y 4 núcleos; comparar tiempos'],
+  ['11:00–11:30','Arranca el Proyecto Final'],
+  ['Tarde','Taller 1B: la app de viajes publica en Kafka; Spark Streaming calcula la espera por zona y el ingreso por empresa minuto a minuto; se apaga Kafka y se comprueba que no se pierde nada'],
+  ['Te llevas','Tus propias mediciones: cuánto tarda cada tecnología y por qué'],
+  ['Trabaja','<span class="chip">RA1</span> <span class="chip">RA3</span> <span class="chip">RA4</span>']]},
+ {c:'var(--amber)',t:'Sesión 3 · Viernes 6 de noviembre · 5:00–9:00 p. m. · Unidad 2',f:[
+  ['Pregunta','¿Cuándo conviene la nube, cuánto cuesta y qué riesgos trae?'],
+  ['Teoría','Servicios de AWS, Azure y Google Cloud; pago por uso; seguridad y normativa (GDPR, ISO/IEC 27001)'],
+  ['7:30–9:00','Análisis de casos: elegir la tecnología para un problema empresarial y justificar su costo y sus beneficios'],
+  ['Te llevas','Una matriz de selección de proveedor con fuentes oficiales'],
+  ['Trabaja','<span class="chip">RA2</span>']]},
+ {c:'var(--green)',t:'Sesión 4 · Sábado 7 de noviembre · 8:00 a. m.–4:00 p. m. · Unidades 2 y 3',f:[
+  ['Pregunta','¿Cuánto cuesta responder cada pregunta en la nube y cómo se baja ese costo?'],
+  ['Mañana','Taller 2: los 19,9 millones de viajes en BigQuery (BigQuery Sandbox, sin tarjeta); costo de cada consulta; tablero para la gerencia en Looker Studio o Power BI; demostración de Spark en Google Cloud'],
+  ['Optimización','Leer menos datos, particionar y ajustar parámetros, y medir el ahorro'],
+  ['1:30–2:15','Sustentación del análisis de casos, a nivel ejecutivo'],
+  ['2:15–3:15','Sustentación del Proyecto Final y examen práctico'],
+  ['Te llevas','Una solución completa, de los datos crudos al tablero, con su costo'],
+  ['Trabaja','<span class="chip">RA2</span> <span class="chip">RA4</span>']]}];
+function ses(k){document.querySelectorAll('.ses').forEach(b=>b.classList.toggle('on',+b.dataset.s===k));
+  const s=SES[k];$('detSes').style.borderLeftColor=s.c;
+  $('detSes').innerHTML='<h3>'+s.t+'</h3><table>'+s.f.map(r=>'<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>').join('')+'</table>';}
+document.querySelectorAll('.ses').forEach(b=>b.onclick=()=>ses(+b.dataset.s));ses(0);
+</script>
+</body>
+</html>
