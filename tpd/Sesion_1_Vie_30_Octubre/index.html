@@ -1,0 +1,815 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sesión 1 · Fundamentos del procesamiento distribuido</title>
+<meta name="description" content="Tecnologías de Procesamiento de Datos · Especialización en Analítica de Datos · Universidad Rafael Núñez · Sesión 1, viernes 30 de octubre">
+<style>
+:root{
+  --navy:#1B2A4A;--blue:#2F6DB5;--blue-soft:#DCE6F4;--amber:#9A5B00;--amber-soft:#FBEBD0;
+  --red:#A33A2C;--red-soft:#F6DEDA;--green:#2E7D4F;--green-soft:#DDEFE3;
+  --bg:#F3F2F1;--card:#FFFFFF;--line:#C9CED8;--text:#252423;--muted:#605E5C;
+  --serif:Cambria,"Iowan Old Style",Georgia,serif;--sans:"Segoe UI",Calibri,system-ui,-apple-system,Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font-family:var(--sans)}
+button{font:inherit;cursor:pointer}
+/* ---------- marco ---------- */
+.top{position:fixed;inset:0 0 auto 0;height:48px;display:flex;align-items:center;gap:12px;padding:0 16px;background:var(--navy);color:#fff;z-index:20}
+.top .marca{font-size:13px;letter-spacing:.06em;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .sp{flex:1}
+.top button{white-space:nowrap;background:transparent;border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:6px;padding:5px 10px;font-size:13px}
+.top button:hover{background:rgba(255,255,255,.12)}
+.progreso{position:fixed;top:48px;left:0;height:4px;background:var(--blue);z-index:20;transition:width .3s}
+.escena{position:fixed;top:52px;bottom:56px;left:0;right:0;overflow:auto;padding:24px 16px}
+.slide{display:none;max-width:1180px;margin:0 auto;animation:entra .35s ease}
+.slide.on{display:block}
+@keyframes entra{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.pie{position:fixed;bottom:0;left:0;right:0;height:56px;display:flex;align-items:center;justify-content:center;gap:16px;background:#fff;border-top:1px solid var(--line);z-index:20}
+.pie button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:8px 18px;font-weight:600;color:var(--navy)}
+.pie button:hover{background:var(--blue-soft)}
+.pie .num{font-size:14px;color:var(--muted);min-width:70px;text-align:center}
+/* índice */
+.indice{position:fixed;top:52px;right:0;bottom:56px;width:min(360px,100%);background:#fff;border-left:1px solid var(--line);z-index:30;overflow:auto;transform:translateX(105%);transition:transform .25s}
+.indice.on{transform:none}
+.indice h3{margin:16px 16px 8px;font-family:var(--serif);color:var(--navy)}
+.indice a{display:block;padding:9px 16px;color:var(--text);text-decoration:none;border-left:4px solid transparent;font-size:14px}
+.indice a:hover{background:var(--bg)}
+.indice a.on{border-left-color:var(--blue);background:var(--blue-soft);font-weight:600}
+.indice .grupo{padding:10px 16px 4px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+/* ---------- tipografía ---------- */
+h1,h2{font-family:var(--serif);color:var(--navy);margin:0}
+h2{font-size:clamp(24px,3vw,34px)}
+.sub{color:var(--muted);font-style:italic;margin:6px 0 18px;font-size:15px}
+p{line-height:1.5;margin:.4em 0}
+.banda{background:var(--navy);color:#fff;border-radius:10px;padding:14px 18px;font-weight:600;margin-top:18px;line-height:1.45}
+.banda.amb{background:var(--amber-soft);color:var(--amber)}
+.nota{font-size:13px;color:var(--muted);font-style:italic}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}.g5{grid-template-columns:repeat(5,1fr)}
+@media(max-width:820px){.g2,.g3,.g4,.g5{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.cab{border-radius:10px 10px 0 0;color:#fff;padding:10px 14px;font-weight:700}
+.cuerpo{border-radius:0 0 10px 10px;padding:12px 14px}
+.navy{background:var(--navy)}.blue{background:var(--blue)}.amber{background:var(--amber)}.red{background:var(--red)}.green{background:var(--green)}
+.s-blue{background:var(--blue-soft)}.s-amber{background:var(--amber-soft)}.s-red{background:var(--red-soft)}.s-green{background:var(--green-soft)}
+ul.p{padding-left:20px;margin:6px 0}ul.p li{margin:6px 0;line-height:1.45}
+.chip{display:inline-block;border:1px solid var(--line);background:#fff;border-radius:999px;padding:4px 12px;font-size:13px;color:var(--navy);font-weight:600;margin:3px}
+.boton{border:0;background:var(--blue);color:#fff;border-radius:8px;padding:9px 16px;font-weight:600}
+.boton.sec{background:#fff;color:var(--navy);border:1px solid var(--line)}
+.boton:disabled{opacity:.45;cursor:default}
+.botones{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+/* portadas */
+.portada{background:var(--navy);color:#fff;border-radius:14px;padding:clamp(28px,6vw,64px);min-height:62vh;display:flex;flex-direction:column;justify-content:center}
+.portada h1{color:#fff;font-size:clamp(30px,4.6vw,52px);line-height:1.15}
+.portada .u{letter-spacing:.18em;font-size:13px;opacity:.75;margin-bottom:6px}
+.portada .pre{font-size:clamp(18px,2vw,22px);margin-top:26px;border-left:4px solid #8FB3E6;padding-left:16px;font-style:italic;opacity:.95}
+.portada .bl{display:flex;gap:10px;flex-wrap:wrap;margin-top:34px}
+.portada .bl span{border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:7px 16px;font-size:14px;opacity:.7}
+.portada .bl span.on{background:#fff;color:var(--navy);opacity:1;font-weight:700}
+/* KPI */
+.kpi{text-align:center}.kpi b{display:block;white-space:nowrap;font-family:var(--serif);font-size:clamp(22px,2.6vw,32px);color:var(--navy)}.kpi span{color:var(--muted);font-size:13px}
+/* cadena */
+.carril{display:grid;grid-template-columns:130px 1fr;border-radius:10px;overflow:hidden;margin-bottom:10px;border:1px solid var(--line)}
+.carril .rot{background:var(--navy);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;text-align:center;padding:8px;font-size:14px}
+.carril .fila{display:flex;flex-wrap:wrap;gap:10px;padding:12px;background:#fff}
+@media(max-width:820px){.carril{grid-template-columns:1fr}}
+.nodo{border:2px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--bg);min-width:150px;flex:1;text-align:left}
+.nodo b{color:var(--navy);display:block}.nodo small{color:var(--muted)}
+.nodo .t{float:right;font-size:11px;background:var(--amber);color:#fff;border-radius:999px;padding:1px 8px}
+.nodo:hover,.nodo.on{border-color:var(--blue);background:var(--blue-soft)}
+.detalle{background:#fff;border-left:5px solid var(--blue);border-radius:8px;padding:12px 16px;min-height:58px;margin-top:6px}
+/* cadena de herramientas */
+.paso{border:0;text-align:left;border-radius:10px;padding:0;background:transparent}
+.paso .h{min-height:62px;border-radius:10px 10px 0 0;color:#fff;padding:10px 12px;font-weight:700}.paso .h small{display:block;font-weight:400;opacity:.9}
+.paso .c{border-radius:0 0 10px 10px;padding:10px 12px;min-height:76px;font-size:14px}
+.paso .f{margin-top:8px}
+.paso.on{outline:3px solid var(--navy);outline-offset:2px;border-radius:10px}
+/* barras */
+.barra{height:26px;border-radius:6px;background:var(--blue);transition:width .4s;color:#fff;font-size:12px;display:flex;align-items:center;padding-left:8px;white-space:nowrap}
+.pista{background:#ECEBEA;border-radius:6px;position:relative}
+.limite{position:absolute;top:-6px;bottom:-6px;border-left:3px dashed var(--red)}
+input[type=range]{width:100%}
+/* nodos de clúster */
+.maq{border:2px solid var(--navy);border-radius:10px;padding:8px;text-align:center;background:#fff;min-width:96px}
+.maq.caida{border-style:dashed;border-color:var(--red);background:var(--red-soft);opacity:.75}
+.bloque{display:inline-block;border-radius:6px;padding:3px 9px;margin:3px;color:#fff;font-weight:700;font-size:13px}
+.b1{background:var(--blue)}.b2{background:var(--navy)}.b3{background:var(--amber)}
+.bloque.gris{background:#BDBDBD}
+/* papeles de MapReduce */
+.papel{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:6px;padding:4px 8px;margin:3px;font-size:13px;box-shadow:0 1px 2px rgba(0,0,0,.06);transition:all .4s}
+.papel.uber{border-left:5px solid var(--navy)}.papel.lyft{border-left:5px solid var(--amber)}
+.zona{background:#fff;border:1px dashed var(--line);border-radius:10px;padding:10px;min-height:70px}
+.zona h4{margin:0 0 6px;color:var(--navy);font-size:14px}
+.cont{display:inline-block;border-radius:6px;padding:6px 8px;margin:3px;font-size:12px;font-weight:600}
+table.t{border-collapse:collapse;width:100%;background:#fff;font-size:14px}
+table.t th{background:var(--navy);color:#fff;text-align:left;padding:8px}
+table.t td{border-bottom:1px solid var(--line);padding:8px;vertical-align:top}
+.gana{background:var(--green-soft);color:var(--green);font-weight:600;border-radius:8px;padding:10px;text-align:center}
+.paga{background:var(--red-soft);color:var(--red);font-weight:600;border-radius:8px;padding:10px;text-align:center}
+.dec{background:var(--navy);color:#fff;font-weight:700;border-radius:8px;padding:10px;text-align:center}
+.flecha{text-align:center;color:var(--muted);font-size:22px;line-height:1}
+.resp{border-radius:8px;padding:12px 14px;margin-top:8px;font-weight:600;display:none}
+.resp.on{display:block}
+@media(max-width:600px){.tira{display:none}.trade{gap:4px}.trade>*{font-size:12px;padding:6px}}
+/* ---------- recorrido animado de un viaje ---------- */
+.viaje{display:grid;grid-template-columns:230px 1fr;gap:14px}
+@media(max-width:820px){.viaje{grid-template-columns:1fr}}
+.etapas{display:flex;flex-direction:column;gap:6px}
+@media(max-width:820px){.etapas{flex-direction:row;overflow-x:auto}.etapa{flex:0 0 auto}}
+.etapa{font:inherit;text-align:left;border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 10px;font-size:13px;color:var(--muted);position:relative;overflow:hidden;white-space:nowrap}
+.etapa b{color:var(--navy);margin-right:6px}
+.etapa.hecha{color:var(--text)}.etapa.hecha b{color:var(--green)}
+.etapa.on{border-color:var(--blue);color:var(--navy);font-weight:600;background:var(--blue-soft)}
+.etapa .avance{position:absolute;left:0;bottom:0;height:3px;background:var(--blue);width:0}
+.escenario{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.escenario svg{display:block;width:100%;height:auto}
+.leyenda{padding:10px 14px;border-top:1px solid var(--line);min-height:62px}
+.leyenda b{color:var(--navy)}
+.controles{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.controles .vel{margin-left:auto;font-size:13px;color:var(--muted)}
+#sViaje .calle{stroke:#E4E2DF;stroke-width:14;stroke-linecap:round;fill:none}
+#sViaje .caja{fill:#fff;stroke:var(--line);stroke-width:1.5;transition:stroke .3s,fill .3s}
+#sViaje .caja.activa{stroke:var(--blue);stroke-width:3;fill:var(--blue-soft)}
+#sViaje svg text{font-family:var(--sans)}
+#sViaje .tt{font-size:13px;font-weight:700;fill:var(--navy)}
+#sViaje .tx{font-size:11px;fill:var(--muted)}
+#sViaje .pant{transition:opacity .35s}
+#sViaje .evento{fill:var(--amber)}
+#sViaje .brillo{fill:none;stroke:var(--amber);stroke-width:3}
+@media (prefers-reduced-motion:reduce){.slide{animation:none}#sViaje .pant,#sViaje .caja{transition:none}}
+</style>
+</head>
+<body>
+<div class="top">
+  <a class="marca" href="../" style="color:#fff;text-decoration:none">← Tecnologías de Procesamiento de Datos · Sesión 1</a>
+  <div class="sp"></div>
+  <button id="bIndice" aria-label="Abrir el índice de diapositivas">☰ Índice</button>
+  <button id="bPantalla" aria-label="Pantalla completa">⛶</button>
+</div>
+<div class="progreso" id="progreso"></div>
+<nav class="indice" id="indice" aria-label="Índice"></nav>
+
+<main class="escena" id="escena">
+
+<!-- 1 -->
+<section class="slide" data-titulo="Portada" data-grupo="Apertura">
+  <div class="portada">
+    <div class="u">UNIVERSIDAD RAFAEL NÚÑEZ</div>
+    <div style="opacity:.85">Especialización en Analítica de Datos · Tecnologías de Procesamiento de Datos</div>
+    <h1 style="margin-top:28px">Unidad 1: Fundamentos del Procesamiento Distribuido</h1>
+    <div style="margin-top:10px;font-style:italic;opacity:.9">Sesión 1 · Viernes 30 de octubre · 5:00–9:00 p. m.</div>
+    <div class="pre">¿Se les ha congelado alguna vez una consulta, un script o un reporte cuando la tabla pasó de 5 o 10 millones de filas? ¿Qué hicieron?</div>
+    <p style="margin-top:28px;opacity:.8;font-size:14px">Avanza con las flechas ← →, con los botones de abajo o deslizando en el celular.</p>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="slide" data-titulo="El problema" data-grupo="Apertura">
+  <h2>El problema: lo que necesita saber la gerencia</h2>
+  <div class="sub">Viajes de Uber y Lyft en Nueva York, junio de 2025 · datos abiertos de la Comisión de Taxis y Limusinas (TLC)</div>
+  <div class="grid g4">
+    <div class="card kpi"><b data-cuenta="19868009">19.868.009</b><span>viajes en un mes</span></div>
+    <div class="card kpi"><b>4,04 GB</b><span>en CSV · 25 columnas por viaje</span></div>
+    <div class="card kpi"><b data-cuenta="662267" data-pre="≈ ">≈ 662.267</b><span>viajes por día</span></div>
+    <div class="card kpi"><b>71,3 % · 28,7 %</b><span>Uber · Lyft</span></div>
+  </div>
+  <div class="grid g2" style="margin-top:16px">
+    <div><div class="cab navy">Pregunta 1 · con el mes completo (por lotes)</div>
+      <div class="cuerpo s-blue"><p style="font-size:19px;font-weight:700;color:var(--navy)">¿Cuántos viajes hizo cada empresa, cuánto cobró de tarifa base, cuánto pagó a sus conductores y qué parte se quedó la plataforma?</p>
+      <p class="nota">Es la pregunta con la que Parrott y Reich (2018) sustentaron ante la TLC el pago mínimo para los conductores, vigente desde 2019.</p></div></div>
+    <div><div class="cab amber">Pregunta 2 · mientras ocurre (en tiempo real)</div>
+      <div class="cuerpo s-amber"><p style="font-size:19px;font-weight:700;color:var(--navy)">¿En qué zonas están esperando más los pasajeros y cuánto ingresa cada empresa, minuto a minuto?</p>
+      <p class="nota">Es la señal de una tarifa dinámica: si la espera sube en una zona, se sube el precio o se mueven conductores hacia allá.</p></div></div>
+  </div>
+  <div class="banda">El ejercicio de Tecnologías de Procesamiento de Datos: responder estas dos preguntas con el archivo real, completo y a tiempo. Ese es el problema; las tecnologías son la forma de resolverlo.</div>
+</section>
+
+<!-- 2b -->
+<section class="slide" data-titulo="Causas y lo que se pierde" data-grupo="Apertura">
+  <h2>Por qué no se responde a tiempo, y cuánto cuesta</h2>
+  <div class="sub">El negocio: US$ 556,9 millones de tarifa base en junio · US$ 127,0 millones retenidos por las plataformas (22,8 %)</div>
+  <div class="grid g4">
+    <div class="card" style="border-top:5px solid var(--amber)"><b style="color:var(--amber)">Causa 1 · Volumen</b><p>Excel carga 1.048.576 filas: ve el <b>5,3 % del mes</b>.</p></div>
+    <div class="card" style="border-top:5px solid var(--amber)"><b style="color:var(--amber)">Causa 2 · Velocidad</b><p>Unos <b>460 viajes por minuto</b>; el reporte nocturno llega tarde.</p></div>
+    <div class="card" style="border-top:5px solid var(--amber)"><b style="color:var(--amber)">Causa 3 · Calidad</b><p><b>231.332</b> esperas negativas y 12.901 tarifas en cero o menos.</p></div>
+    <div class="card" style="border-top:5px solid var(--amber)"><b style="color:var(--amber)">Causa 4 · Capacidad fija</b><p>Un computador no crece con los datos; comprar para el pico deja equipos ociosos.</p></div>
+  </div>
+  <div class="grid g3" style="margin-top:14px">
+    <div class="card" style="border-top:5px solid var(--red)"><b style="font-family:var(--serif);font-size:30px;color:var(--red)">US$ 12,2 M</b><p>en el mes, en <b>2.895.195 viajes</b> (14,6 %) en los que el pago al conductor superó la tarifa base. ¿En qué zonas y a qué horas? Solo se sabe procesando el mes completo.</p></div>
+    <div class="card" style="border-top:5px solid var(--red)"><b style="font-family:var(--serif);font-size:30px;color:var(--red)">US$ 49,9 M</b><p>de tarifa en <b>1.482.132 viajes</b> (7,5 %) con más de 10 minutos de espera. Los que cancelaron no aparecen en el archivo: esa pérdida solo se ve en tiempo real.</p></div>
+    <div class="card" style="border-top:5px solid var(--green)"><b style="font-family:var(--serif);font-size:30px;color:var(--green)">US$ 8,07 M</b><p>deja a las plataformas <b>LaGuardia</b> en un mes, la zona más rentable. Saber dónde se gana también es parte del problema.</p></div>
+  </div>
+  <p class="nota" style="margin-top:8px">Cifras calculadas con el archivo completo de la TLC. Plataforma = tarifa base menos pago al conductor (sin peajes, impuestos ni propinas). «En riesgo» no es «perdido»: estimar cuánto se recupera es trabajo de analista.</p>
+  <div class="banda">Cada causa tiene una tecnología que la ataca: eso es lo que vamos a medir en estas 4 sesiones.</div>
+</section>
+
+<!-- 3 -->
+<section class="slide" data-titulo="La cadena de la información" data-grupo="Apertura">
+  <h2>Una noche en Nueva York: la cadena de la información</h2>
+  <div class="sub">Haz clic en cada pieza: quién genera el dato, por dónde viaja, quién decide con él y cuándo lo trabajamos</div>
+  <div class="carril"><div class="rot">Personas</div><div class="fila">
+    <button class="nodo" data-d="María pide un viaje en la app y Carlos, el conductor, lo acepta. Cada paso (solicitud, llegada, recogida, fin, pago) es un dato."><b>María y Carlos</b><small>pasajera y conductor</small></button>
+    <button class="nodo" data-d="Sofía es la analista: consulta los datos ya procesados y arma el tablero para la gerencia. Es el rol de ustedes en esta asignatura."><b>Sofía</b><small>analista de datos</small></button>
+    <button class="nodo" data-d="La gerencia decide incentivos por zona y por hora con lo que muestra el tablero."><b>Gerente</b><small>decide con los datos</small></button>
+  </div></div>
+  <div class="carril"><div class="rot">Tecnologías<br>de la empresa</div><div class="fila">
+    <button class="nodo" data-d="La app registra solicitud, ubicación, recogida y pago: genera los eventos del viaje."><b>App móvil</b><small>genera los eventos</small></button>
+    <button class="nodo" data-d="Kafka recibe todos los eventos del viaje sin perder ninguno y los entrega a cada sistema que los necesita. Lo practicamos el sábado 31 por la tarde."><span class="t">Sáb 31</span><b>Kafka</b><small>recibe todo, sin perder nada</small></button>
+    <button class="nodo" data-d="Spark Streaming calcula en segundos la espera por zona: la señal de la tarifa dinámica (pregunta 2). Sábado 31 por la tarde."><span class="t">Sáb 31</span><b>Spark Streaming</b><small>tarifa dinámica, en segundos</small></button>
+    <button class="nodo" data-d="Cada noche, HDFS guarda los viajes del día repartidos en bloques y Spark o MapReduce los procesan (pregunta 1). Hoy la teoría; mañana sábado 31 en la mañana, la práctica."><span class="t">Hoy y sáb 31</span><b>HDFS + Spark / MapReduce</b><small>lotes nocturnos (2 a. m.)</small></button>
+    <button class="nodo" data-d="BigQuery es el almacén analítico en la nube: consulta el mes completo sin servidores propios. Sesiones 3 y 4."><span class="t">Sesión 3</span><b>BigQuery</b><small>almacén analítico en la nube</small></button>
+    <button class="nodo" data-d="El tablero muestra los indicadores con filtros por empresa, zona y hora."><b>Tablero</b><small>indicadores para la gerencia</small></button>
+  </div></div>
+  <div class="carril"><div class="rot">Regulador<br>y sociedad</div><div class="fila">
+    <button class="nodo" data-d="La TLC recibe todos los viajes de las aplicaciones y los publica cada mes como datos abiertos: es el archivo con el que trabajamos."><b>TLC</b><small>publica los viajes cada mes</small></button>
+    <button class="nodo" data-d="Con estos datos, Parrott y Reich (2018) mostraron que los conductores ganaban poco."><b>Parrott y Reich (2018)</b><small>analizan los ingresos</small></button>
+    <button class="nodo" data-d="La ciudad fijó un pago mínimo para los conductores desde 2019: el análisis de datos vuelve a Carlos."><b>Pago mínimo (2019)</b><small>vuelve a los conductores</small></button>
+  </div></div>
+  <div class="detalle" id="detCadena">Haz clic en una pieza para ver su papel en el caso.</div>
+  <div class="banda">En estas 4 sesiones seremos Sofía, la analista: cada tecnología es un eslabón de esta cadena, y el archivo de la práctica es el que publica la TLC.</div>
+</section>
+
+<!-- 3b · recorrido animado -->
+<section class="slide" id="sViaje" data-titulo="Un viaje, de principio a fin" data-grupo="Apertura">
+  <h2>Un viaje, de principio a fin</h2>
+  <div class="sub">Desde que María entra a la app hasta que su viaje llega al tablero de la gerencia. Pausa cuando quieras o avanza etapa por etapa</div>
+  <div class="viaje">
+    <div class="etapas" id="vEtapas"></div>
+    <div>
+      <div class="escenario">
+        <!-- Escenario: a la izquierda, un mapa de calles con María, Carlos (el carro) y el teléfono de María;
+             a la derecha, las tecnologías de la empresa por donde pasan los eventos del viaje. -->
+        <svg viewBox="0 0 820 430" role="img" aria-label="Animación del recorrido de un viaje por la app y las tecnologías de la empresa">
+          <rect x="0" y="0" width="490" height="430" fill="#F7F6F4"/>
+          <path class="calle" d="M60 200 H450 M110 60 V410 M400 60 V410 M110 390 H450"/>
+          <text class="tx" x="20" y="24">Nueva York · zona ilustrativa</text>
+          <g id="vDestino" opacity=".35"><circle cx="400" cy="390" r="9" fill="var(--red)"/><text class="tx" x="416" y="414">destino</text></g>
+          <g id="vMaria"><circle cx="110" cy="320" r="11" fill="var(--blue)"/><circle cx="110" cy="320" r="4" fill="#fff"/><text class="tt" x="128" y="325">María</text></g>
+          <g id="vCarro">
+            <circle id="vBrillo" class="brillo" r="26" opacity="0"/>
+            <rect x="-20" y="-11" width="40" height="22" rx="7" fill="var(--navy)"/>
+            <rect x="-10" y="-7" width="20" height="9" rx="2" fill="#8FB3E6"/>
+            <circle id="vPasajera" r="5" cx="0" cy="5" fill="var(--blue)" opacity="0"/>
+            <text class="tt" x="-20" y="-18">Carlos</text>
+          </g>
+          <g transform="translate(190 222)">
+            <rect width="150" height="170" rx="16" fill="var(--navy)"/>
+            <rect x="8" y="12" width="134" height="146" rx="8" fill="#fff"/>
+            <g class="pant" data-p="0"><text class="tt" x="20" y="45">Iniciar sesión</text><rect x="20" y="58" width="110" height="18" rx="4" fill="#EEE"/><rect x="20" y="82" width="110" height="18" rx="4" fill="#EEE"/><rect id="vEntrar" x="20" y="110" width="110" height="24" rx="12" fill="var(--blue)"/><text x="58" y="126" font-size="12" fill="#fff" font-weight="700">Entrar</text></g>
+            <g class="pant" data-p="1"><text class="tt" x="20" y="42">¿A dónde vas?</text><rect x="20" y="52" width="110" height="20" rx="4" fill="#EEE"/><text id="vDestTxt" class="tx" x="26" y="66"></text><rect id="vPedir" x="20" y="108" width="110" height="28" rx="14" fill="var(--green)"/><text x="40" y="127" font-size="12" fill="#fff" font-weight="700">Pedir viaje</text></g>
+            <g class="pant" data-p="2"><text class="tt" x="20" y="50">Buscando</text><text class="tt" x="20" y="68">conductor…</text><circle id="vRadar" cx="75" cy="112" r="10" fill="none" stroke="var(--blue)" stroke-width="3"/></g>
+            <g class="pant" data-p="3"><text class="tt" x="20" y="44">Carlos aceptó</text><text class="tx" x="20" y="64">Toyota · ★ 4,9</text><text id="vLlega" class="tt" x="20" y="100" style="font-size:19px"></text><text class="tx" x="20" y="120">para recogerte</text></g>
+            <g class="pant" data-p="4"><text class="tt" x="20" y="44">En viaje</text><text id="vTaximetro" x="20" y="96" font-family="Cambria,Georgia,serif" font-size="26" font-weight="700" fill="var(--navy)"></text><text class="tx" x="20" y="120">tarifa base</text></g>
+            <g class="pant" data-p="5"><text class="tt" x="20" y="44">Pagado</text><text x="20" y="90" font-family="Cambria,Georgia,serif" font-size="26" font-weight="700" fill="var(--green)">US$ 28,00</text><text x="20" y="122" font-size="16" fill="var(--amber)">★★★★★</text></g>
+          </g>
+          <rect x="490" y="0" width="330" height="430" fill="#fff"/>
+          <rect id="vKafka" class="caja" x="510" y="20" width="290" height="104" rx="10"/>
+          <text class="tt" x="526" y="44">Kafka · tema «viajes»</text>
+          <g id="vLog"></g>
+          <text id="vKafkaTxt" class="tx" x="526" y="114"></text>
+          <rect id="vSpark" class="caja" x="510" y="140" width="290" height="70" rx="10"/>
+          <text class="tt" x="526" y="163">Spark Streaming · en segundos</text>
+          <text id="vSparkTxt" class="tx" x="526" y="184"></text>
+          <text id="vSparkTxt2" class="tx" x="526" y="200"></text>
+          <rect id="vPago" class="caja" x="510" y="226" width="290" height="74" rx="10"/>
+          <text class="tt" x="526" y="248">Reparto del pago</text>
+          <rect x="526" y="258" width="258" height="18" rx="4" fill="#ECEBEA"/>
+          <rect id="vCond" x="526" y="258" width="0" height="18" fill="var(--green)"/>
+          <rect id="vPlat" x="526" y="258" width="0" height="18" fill="var(--navy)"/>
+          <text id="vPagoTxt" class="tx" x="526" y="292"></text>
+          <rect id="vHdfs" class="caja" x="510" y="312" width="90" height="50" rx="10"/><text class="tt" x="522" y="333">HDFS</text><text class="tx" x="522" y="351">lote 2 a. m.</text>
+          <rect id="vBq" class="caja" x="610" y="312" width="90" height="50" rx="10"/><text class="tt" x="622" y="333">BigQuery</text><text class="tx" x="622" y="351">almacén</text>
+          <rect id="vTablero" class="caja" x="710" y="312" width="90" height="50" rx="10"/><text class="tt" x="722" y="333">Tablero</text>
+          <g id="vBarras"><rect x="722" y="356" width="10" height="0" fill="var(--blue)"/><rect x="738" y="356" width="10" height="0" fill="var(--blue)"/><rect x="754" y="356" width="10" height="0" fill="var(--amber)"/><rect x="770" y="356" width="10" height="0" fill="var(--blue)"/></g>
+          <text id="vTlc" class="tx" x="510" y="386" opacity="0">Cada mes van a la TLC, que los publica.</text>
+          <text class="tx" x="510" y="418">Viaje ilustrativo · reparto: promedio del mes.</text>
+          <circle id="vEv1" class="evento" r="7" opacity="0"/>
+          <circle id="vEv2" class="evento" r="6" opacity="0"/>
+          <circle id="vEv3" class="evento" r="6" opacity="0"/>
+        </svg>
+        <div class="leyenda" id="vLeyenda" aria-live="polite"></div>
+      </div>
+      <div class="controles">
+        <button class="boton" id="vPlay">⏸ Pausa</button>
+        <button class="boton sec" id="vAnt">← Etapa</button>
+        <button class="boton sec" id="vSig">Etapa →</button>
+        <button class="boton sec" id="vReini">↺ Desde el inicio</button>
+        <label class="vel">Velocidad <select id="vVel"><option value="0.6">lenta</option><option value="1" selected>normal</option><option value="1.6">rápida</option></select></label>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="slide" data-titulo="El objetivo del ejercicio" data-grupo="Apertura">
+  <h2>El objetivo del ejercicio: de la pregunta a la tecnología</h2>
+  <div class="sub">Cada herramienta entra cuando la anterior se queda corta. Haz clic en cada paso</div>
+  <div class="grid g5" id="pasos">
+    <button class="paso" data-i="0"><div class="h red">Excel y pandas<small>un solo computador</small></div><div class="c s-red">Excel no abre el mes; pandas pediría unos 11 GB de memoria</div><div class="f chip">Sáb 31 · Taller 1A · U1</div></button>
+    <button class="paso" data-i="1"><div class="h navy">Hadoop<small>HDFS + YARN + MapReduce</small></div><div class="c s-blue">Reparte el archivo en 31 bloques y el cálculo en 31 tareas</div><div class="f chip">Sáb 31 · Taller 1A · U1</div></button>
+    <button class="paso" data-i="2"><div class="h navy">Spark<small>en memoria, con SQL</small></div><div class="c s-blue">El mismo resultado, más rápido; lee directo el Parquet oficial</div><div class="f chip">Sáb 31 · Taller 1A · U1</div></button>
+    <button class="paso" data-i="3"><div class="h amber">Kafka + Streaming<small>eventos en tiempo real</small></div><div class="c s-amber">Responde la pregunta 2 mientras ocurren los viajes</div><div class="f chip">Sáb 31 · Taller 1B · U3</div></button>
+    <button class="paso" data-i="4"><div class="h green">La nube<small>BigQuery + tablero</small></div><div class="c s-green">Consulta el mes sin servidores propios y lleva la respuesta a la gerencia</div><div class="f chip">Sesión 3 · Taller 2 · U2</div></button>
+  </div>
+  <div class="detalle" id="detPaso">Haz clic en un paso para ver por qué la herramienta anterior se queda corta y qué vas a medir.</div>
+  <div class="grid g3" style="margin-top:12px">
+    <div class="card"><b>Mide:</b> tiempo, datos leídos, datos movidos y costo</div>
+    <div class="card"><b>Compara:</b> el mismo resultado con otra herramienta</div>
+    <div class="card"><b>Decide:</b> qué tecnología responde cada pregunta y por qué</div>
+  </div>
+  <div class="banda">Objetivo: decidir con evidencia qué tecnología de procesamiento responde cada necesidad del negocio, completa, exacta y a tiempo.</div>
+</section>
+
+<!-- 5 -->
+<section class="slide" data-titulo="¿Por qué la nube?" data-grupo="Apertura">
+  <h2>¿Por qué hacerlo en la nube?</h2>
+  <div class="sub">El analista no compra servidores: pide capacidad cuando la necesita y la devuelve cuando termina</div>
+  <div class="card">
+    <b>Simula: ¿cuántos meses de viajes quieres analizar?</b> <span id="mesesTxt" class="chip">1 mes</span>
+    <input type="range" id="meses" min="1" max="12" value="1" aria-label="Meses de viajes">
+    <p style="margin:10px 0 4px">Memoria que pediría cargarlo en pandas (unos 10,8 GB por mes)</p>
+    <div class="pista"><div class="barra" id="barMem" style="width:8%">10,8 GB</div><div class="limite" style="left:12.3%" title="16 GB"></div></div>
+    <p class="nota">La línea roja es un computador de 16 GB.</p>
+    <div class="grid g2" style="margin-top:8px">
+      <div class="card s-red" id="pcTxt"><b>Con el propio computador:</b> no cabe con holgura ni un mes.</div>
+      <div class="card s-green" id="nubeTxt"><b>En la nube:</b> se pide la capacidad que haga falta, por horas, y se devuelve al terminar.</div>
+    </div>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div><div class="cab red">Con el propio computador</div><div class="cuerpo s-red"><ul class="p">
+      <li>Hay que instalar y mantener todo: Docker, Hadoop, Spark, Kafka</li>
+      <li>Cada equipo es distinto: lo que funciona en uno falla en otro</li>
+      <li>La capacidad es fija y no crece con los datos</li>
+      <li>Si el equipo falla o se apaga, se detiene el trabajo</li></ul></div></div>
+    <div><div class="cab green">En la nube</div><div class="cuerpo s-green"><ul class="p">
+      <li><b>Elasticidad:</b> 4 núcleos hoy y 400 mañana, por horas</li>
+      <li><b>Pago por uso:</b> BigQuery cobra por los datos que lee cada consulta</li>
+      <li><b>Servicios administrados:</b> el proveedor instala y opera; el analista consulta</li>
+      <li><b>Desde el navegador:</b> el mismo entorno para todos</li></ul></div></div>
+  </div>
+  <div class="grid g2" style="margin-top:12px">
+    <div class="card"><b>Sesiones 1 y 2 · GitHub Codespaces:</b> un computador en la nube de 4 núcleos y 16 GB, gratis y en el navegador, con Hadoop, Spark y Kafka.</div>
+    <div class="card"><b>Sesiones 3 y 4 · Google Cloud:</b> BigQuery consulta los 19,9 millones de viajes sin servidores propios y sin tarjeta (Sandbox).</div>
+  </div>
+  <div class="banda amb">La nube no siempre es la respuesta: datos sensibles con restricciones legales, o cargas constantes que salen más caras alquiladas que propias. Ese análisis (seguridad, normativa y costos) es la Unidad 2.</div>
+</section>
+
+<!-- 6 -->
+<section class="slide" data-titulo="Agenda de hoy" data-grupo="Apertura">
+  <h2>Agenda de hoy</h2>
+  <div class="sub">Hoy, la Unidad 1 — mañana sábado 31, la práctica en GitHub Codespaces</div>
+  <div class="grid tira" style="grid-template-columns:30fr 60fr 15fr 75fr 60fr;gap:6px">
+    <div class="cab" style="background:var(--blue-soft);color:var(--navy);border-radius:8px;text-align:center">Apertura</div>
+    <div class="cab navy" style="border-radius:8px;text-align:center">Bloque 1</div>
+    <div class="cab" style="background:#fff;color:var(--muted);border:1px dashed var(--line);border-radius:8px;text-align:center;font-size:12px">Pausa</div>
+    <div class="cab blue" style="border-radius:8px;text-align:center">Bloque 2</div>
+    <div class="cab navy" style="border-radius:8px;text-align:center">Bloque 3</div>
+  </div>
+  <div class="grid g4" style="margin-top:12px">
+    <div class="card"><b>5:00–5:30 · Apertura</b><p>El problema del caso, el objetivo del ejercicio, por qué la nube y las herramientas</p></div>
+    <div class="card"><b>5:30–6:30 · Procesamiento distribuido</b><p>Escalar, teorema CAP, consistencia, particionamiento y replicación</p></div>
+    <div class="card"><b>6:45–8:00 · Modelo MapReduce</b><p>Map → Shuffle → Reduce, la actividad a mano y por qué existe Spark</p></div>
+    <div class="card"><b>8:00–9:00 · Ecosistema Hadoop</b><p>HDFS, YARN, el ecosistema y los trade-offs de diseño</p></div>
+  </div>
+  <div class="banda">Hoy, el marco para evaluar arquitecturas. Mañana, sábado 31, en GitHub Codespaces: Hadoop y Spark (8:00 a. m.) y Kafka con la app de viajes (tarde).</div>
+</section>
+
+<!-- 7 -->
+<section class="slide" data-titulo="Las herramientas" data-grupo="Apertura">
+  <h2>Las herramientas de Tecnologías de Procesamiento de Datos</h2>
+  <div class="sub">Qué usaremos, para qué y cuándo</div>
+  <div class="grid g4">
+    <div><div class="cab" style="background:#5B6B86">Entorno de trabajo<small style="display:block;font-weight:400">Todas las sesiones</small></div><div class="cuerpo" style="background:#fff;border:1px solid var(--line)">
+      <p><b>GitHub Codespaces</b><br>Computador en la nube (4 núcleos, 16 GB) desde el navegador</p><p><b>Docker</b><br>Hadoop, Spark y Kafka en contenedores</p><p><b>Terminal (bash)</b><br>Para dar las órdenes</p><p><b>Python</b><br>Datos, app de viajes y Kafka</p></div></div>
+    <div><div class="cab navy">Unidad 1 · Lotes<small style="display:block;font-weight:400">Sáb 31, mañana</small></div><div class="cuerpo" style="background:#fff;border:1px solid var(--line)">
+      <p><b>Hadoop: HDFS + YARN</b><br>Datos repartidos en bloques y recursos del clúster</p><p><b>MapReduce</b><br>Procesamiento por lotes en dos fases</p><p><b>Spark</b><br>El mismo cálculo en memoria, para comparar</p></div></div>
+    <div><div class="cab amber">Unidad 3 · Tiempo real<small style="display:block;font-weight:400">Sáb 31, tarde</small></div><div class="cuerpo" style="background:#fff;border:1px solid var(--line)">
+      <p><b>App de viajes</b><br>Cliente, conductor y central publican cada evento</p><p><b>Kafka</b><br>Mueve eventos en tiempo real</p><p><b>Spark Structured Streaming</b><br>Procesa eventos en ventanas de tiempo</p></div></div>
+    <div><div class="cab blue">Unidad 2 · Nube<small style="display:block;font-weight:400">Sesiones 3 y 4</small></div><div class="cuerpo" style="background:#fff;border:1px solid var(--line)">
+      <p><b>BigQuery</b><br>SQL sin servidores; costo por bytes procesados</p><p><b>Looker Studio</b><br>Tablero para la gerencia</p><p><b>Spark en Google Cloud</b><br>Dataproc: demostración del docente</p><p><b>AWS y Azure</b><br>Comparativa de servicios</p></div></div>
+  </div>
+  <p class="nota" style="margin-top:10px">También existen (para ubicarse, no se practican): Databricks · Amazon EMR · Azure Synapse · Snowflake · Cloudera · Apache Flink · Amazon Kinesis · Google Pub/Sub. Los conceptos de hoy sirven para todas.</p>
+</section>
+
+<!-- 8 -->
+<section class="slide" data-titulo="Bloque 1" data-grupo="Bloque 1 · Procesamiento distribuido">
+  <div class="portada"><div class="u">BLOQUE 1 · 5:30–6:30 p. m.</div><h1>Procesamiento distribuido y arquitecturas</h1>
+  <div class="pre">¿Qué pasa cuando una base de datos ya no cabe en una sola máquina?</div>
+  <div class="bl"><span class="on">Bloque 1 · Procesamiento distribuido</span><span>Bloque 2 · Modelo MapReduce</span><span>Bloque 3 · Ecosistema Hadoop</span></div></div>
+</section>
+
+<!-- 9 -->
+<section class="slide" data-titulo="Escalar: vertical u horizontal" data-grupo="Bloque 1 · Procesamiento distribuido">
+  <h2>¿Qué pasa cuando una sola máquina no alcanza?</h2>
+  <div class="sub">Dos caminos: una máquina más grande o más máquinas trabajando juntas. Mueve el volumen de datos</div>
+  <div class="card"><b>Volumen del cierre nocturno:</b> <span id="volTxt" class="chip">×1</span>
+    <input type="range" id="vol" min="1" max="10" value="1" aria-label="Volumen de datos"></div>
+  <div class="grid g2" style="margin-top:12px">
+    <div><div class="cab navy">Escalar verticalmente</div><div class="cuerpo" style="background:#fff;border:1px solid var(--line)">
+      <p>Una sola máquina cada vez más grande.</p>
+      <div class="pista" style="height:30px"><div class="barra" id="barVert" style="width:10%;height:30px"></div><div class="limite" style="left:60%" title="techo físico"></div></div>
+      <p class="nota">Línea roja: el techo físico de un servidor.</p>
+      <p id="vertTxt">Alcanza: un servidor más grande procesa el cierre.</p></div></div>
+    <div><div class="cab blue">Escalar horizontalmente</div><div class="cuerpo" style="background:#fff;border:1px solid var(--line)">
+      <p>Más máquinas comunes trabajando juntas.</p>
+      <div id="nodosH" style="display:flex;flex-wrap:wrap;gap:6px;min-height:40px"></div>
+      <p id="horTxt">1 nodo procesa el cierre.</p></div></div>
+  </div>
+  <div class="grid g2" style="margin-top:12px">
+    <div class="card s-blue"><b>Camino vertical:</b> alcanza hasta el próximo techo y sigue siendo un único punto de falla.</div>
+    <div class="card s-amber"><b>Camino horizontal:</b> se crece agregando nodos, pero hay que coordinarlos.</div>
+  </div>
+  <div class="banda">Escalar horizontalmente exige coordinación: esa coordinación es exactamente lo que estudia el procesamiento distribuido.</div>
+</section>
+
+<!-- 10 -->
+<section class="slide" data-titulo="Teorema CAP" data-grupo="Bloque 1 · Procesamiento distribuido">
+  <h2>Teorema CAP</h2>
+  <div class="sub">Si la red se parte, un sistema distribuido debe elegir: consistencia o disponibilidad</div>
+  <div class="grid g3">
+    <div class="card"><b style="color:var(--navy)">C · Consistencia</b><p>Toda lectura devuelve la escritura más reciente, sin importar qué nodo responda.</p></div>
+    <div class="card"><b style="color:var(--navy)">A · Disponibilidad</b><p>Todo nodo que funciona responde siempre, aunque otros fallen.</p></div>
+    <div class="card"><b style="color:var(--navy)">P · Tolerancia a particiones</b><p>El sistema sigue operando aunque se pierdan mensajes entre nodos.</p></div>
+  </div>
+  <div class="card" style="margin-top:12px">
+    <b>Escenario:</b> el nodo 1 registró un retiro de US$ 200; la red se parte y el nodo 2 no lo recibió. Un cliente consulta su saldo en el nodo 2.
+    <div style="display:flex;align-items:center;gap:12px;margin:12px 0;flex-wrap:wrap">
+      <div class="maq">Nodo 1<br><b>saldo US$ 800</b></div>
+      <div id="redCAP" style="flex:1;min-width:80px;border-top:4px solid var(--green);text-align:center;font-size:12px;color:var(--muted)">red</div>
+      <div class="maq">Nodo 2<br><b id="saldo2">saldo US$ 1.000</b></div>
+    </div>
+    <div class="botones"><button class="boton sec" id="bPartir">1. Partir la red</button><button class="boton" id="bCP" disabled>Responder como sistema CP</button><button class="boton" id="bAP" disabled>Responder como sistema AP</button></div>
+    <div class="resp s-blue" id="rCP">CP (HBase, ZooKeeper): el nodo 2 responde «no disponible» o espera. Nunca entrega un saldo desactualizado.</div>
+    <div class="resp s-amber" id="rAP">AP (Cassandra, DNS): el nodo 2 responde de inmediato… con US$ 1.000, el saldo anterior al retiro.</div>
+  </div>
+  <div class="banda">En un sistema distribuido real las particiones ocurren: P no se elige. La decisión es entre C y A, y es de negocio.</div>
+</section>
+
+<!-- 11 -->
+<section class="slide" data-titulo="Consistencia fuerte y eventual" data-grupo="Bloque 1 · Procesamiento distribuido">
+  <h2>Consistencia fuerte vs. consistencia eventual</h2>
+  <div class="sub">Qué ve quien lee justo después de una escritura, cuando el dato tiene tres réplicas</div>
+  <div class="botones"><button class="boton" id="bFuerte">▶ Escribir con consistencia fuerte</button><button class="boton sec" id="bEventual">▶ Escribir con consistencia eventual</button></div>
+  <div style="display:flex;gap:12px;flex-wrap:wrap" id="replicas"></div>
+  <div class="detalle" id="detCons">Escribe «likes = 101» en el Nodo 1 y mira qué lee alguien en el Nodo 3.</div>
+  <div class="grid g2" style="margin-top:12px">
+    <div class="card s-green"><b>Contador de «likes»:</b> ver 100 en vez de 101 un instante no le cuesta nada a nadie: eventual basta.</div>
+    <div class="card s-red"><b>Saldo bancario:</b> leer un saldo anterior al retiro permite gastar dos veces el mismo dinero: exige fuerte.</div>
+  </div>
+  <div class="banda">La elección no es solo técnica: depende del costo de negocio de un dato desactualizado.</div>
+</section>
+
+<!-- 12 -->
+<section class="slide" data-titulo="Particionar y replicar" data-grupo="Bloque 1 · Procesamiento distribuido">
+  <h2>Tolerancia a fallos y particionamiento</h2>
+  <div class="sub">Los viajes repartidos por distrito en 3 nodos. Haz clic en un nodo para apagarlo</div>
+  <label class="chip"><input type="checkbox" id="conRep" checked> Con réplicas</label>
+  <div class="grid g3" id="nodosP" style="margin-top:10px"></div>
+  <div class="detalle" id="detPart">Todos los nodos funcionan: se pueden consultar los viajes de Manhattan, Brooklyn y Queens.</div>
+  <ul class="p"><li><b>Particionamiento (sharding):</b> dividir los datos entre nodos para repartir la carga.</li><li><b>Replicación:</b> guardar copias del mismo dato en varios nodos para sobrevivir a fallos.</li></ul>
+  <div class="banda">Todo diseño distribuido combina ambos, y cada combinación implica un trade-off distinto de costo, velocidad y riesgo.</div>
+</section>
+
+<!-- 13 -->
+<section class="slide" data-titulo="Bloque 2" data-grupo="Bloque 2 · MapReduce">
+  <div class="portada"><div class="u">BLOQUE 2 · 6:45–8:00 p. m.</div><h1>Modelo MapReduce</h1>
+  <div class="pre">¿Qué pasos de un problema de su trabajo serían «map» y cuáles «reduce»?</div>
+  <div class="bl"><span>Bloque 1 · Procesamiento distribuido</span><span class="on">Bloque 2 · Modelo MapReduce</span><span>Bloque 3 · Ecosistema Hadoop</span></div></div>
+</section>
+
+<!-- 14 -->
+<section class="slide" data-titulo="Map → Shuffle → Reduce" data-grupo="Bloque 2 · MapReduce">
+  <h2>Map → Shuffle → Reduce</h2>
+  <div class="sub">El job del taller de mañana: tarifa base por empresa (tarifas ilustrativas, en dólares). Avanza fase por fase</div>
+  <div class="botones"><button class="boton" id="bFase">▶ Siguiente fase</button><button class="boton sec" id="bFaseR">↺ Reiniciar</button><span class="chip" id="faseTxt">Entrada</span></div>
+  <div class="grid g4" id="mrDiag"></div>
+  <div class="grid g3" style="margin-top:12px">
+    <div class="card"><b>Map:</b> cada nodo procesa su porción de datos de forma independiente y en paralelo.</div>
+    <div class="card"><b>Shuffle:</b> los resultados intermedios se agrupan por clave y viajan por la red.</div>
+    <div class="card"><b>Reduce:</b> cada nodo agrega los valores de una clave y produce el resultado final.</div>
+  </div>
+  <div class="banda">El shuffle es la fase más costosa: mueve datos por la red entre todos los nodos.</div>
+</section>
+
+<!-- 15 -->
+<section class="slide" data-titulo="Actividad: MapReduce a mano" data-grupo="Bloque 2 · MapReduce">
+  <h2>Actividad: MapReduce a mano</h2>
+  <div class="sub">15 minutos · 12 viajes reales del archivo de la TLC · grupos de estudiantes hacen de mappers y de reducers</div>
+  <div class="botones">
+    <button class="boton" id="aMap">1. Map</button><button class="boton" id="aShuffle" disabled>2. Shuffle</button><button class="boton" id="aReduce" disabled>3. Reduce</button>
+    <button class="boton sec" id="aComb">4. Repetir con combiner</button><button class="boton sec" id="aReset">↺ Reiniciar</button>
+  </div>
+  <div class="grid g3" id="mappers"></div>
+  <div class="grid g2" style="margin-top:10px">
+    <div class="zona"><h4>Reducer Uber</h4><div id="redU"></div><b id="sumU"></b></div>
+    <div class="zona"><h4>Reducer Lyft</h4><div id="redL"></div><b id="sumL"></b></div>
+  </div>
+  <div class="detalle" id="detAct">Pulsa «1. Map»: cada mapper escribe un papel por viaje con (empresa, tarifa).</div>
+  <div class="banda">Sin combiner viajan 12 papeles; con combiner, 6 (dos por mapper). Con el mes completo: 19,9 millones de pares frente a 62.</div>
+</section>
+
+<!-- 16 -->
+<section class="slide" data-titulo="Limitaciones de MapReduce" data-grupo="Bloque 2 · MapReduce">
+  <h2>Las limitaciones de MapReduce, no solo sus fortalezas</h2>
+  <div class="sub">Un algoritmo iterativo repite el mismo cálculo varias veces sobre los mismos datos. Elige cuántas pasadas</div>
+  <div class="card"><b>Pasadas sobre los viajes:</b> <span class="chip" id="pasTxt">10</span><input type="range" id="pas" min="1" max="20" value="10" aria-label="Pasadas"></div>
+  <div class="grid g2" style="margin-top:12px">
+    <div><div class="cab navy">MapReduce: cada pasada es un job nuevo</div><div class="cuerpo" style="background:#fff;border:1px solid var(--line)">
+      <div id="mrDisco" style="display:flex;flex-wrap:wrap;gap:4px"></div><p id="mrTxt"></p></div></div>
+    <div><div class="cab green">Spark: los datos quedan en memoria</div><div class="cuerpo" style="background:#fff;border:1px solid var(--line)">
+      <div id="spDisco" style="display:flex;flex-wrap:wrap;gap:4px"></div><p id="spTxt"></p></div></div>
+  </div>
+  <ul class="p"><li><b>Disco entre jobs:</b> cada job escribe los resultados intermedios a disco.</li><li><b>Iterar es relanzar:</b> los algoritmos iterativos (por ejemplo, de machine learning) relanzan el job en cada pasada.</li></ul>
+  <div class="banda">Esta limitación concreta es la razón de ingeniería detrás de Apache Spark. Mañana la comprueban con métricas.</div>
+</section>
+
+<!-- 17 -->
+<section class="slide" data-titulo="Bloque 3" data-grupo="Bloque 3 · Ecosistema Hadoop">
+  <div class="portada"><div class="u">BLOQUE 3 · 8:00–9:00 p. m.</div><h1>Ecosistema Apache Hadoop</h1>
+  <div class="pre">¿Por qué HDFS replica cada bloque 3 veces por defecto?</div>
+  <div class="bl"><span>Bloque 1 · Procesamiento distribuido</span><span>Bloque 2 · Modelo MapReduce</span><span class="on">Bloque 3 · Ecosistema Hadoop</span></div></div>
+</section>
+
+<!-- 18 -->
+<section class="slide" data-titulo="HDFS" data-grupo="Bloque 3 · Ecosistema Hadoop">
+  <h2>HDFS: Hadoop Distributed File System</h2>
+  <div class="sub">Un archivo se divide en bloques y cada bloque se guarda 3 veces en máquinas distintas. Haz clic en un DataNode para apagarlo</div>
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+    <div class="card" style="flex:1;min-width:200px"><b>NameNode</b> <span class="nota">metadatos: dónde está cada bloque</span><br><button class="boton sec" id="bNN" style="margin-top:6px">Apagar el NameNode</button></div>
+  </div>
+  <div class="grid g4" id="dataNodes" style="margin-top:10px"></div>
+  <div class="detalle" id="detHDFS">Los 3 bloques del archivo (B1, B2, B3) están disponibles.</div>
+  <p class="nota">En el taller de mañana: el mes (4,04 GB) queda en 31 bloques de 128 MB. Allí hay un solo DataNode, así que la réplica es 1.</p>
+  <div class="banda">El NameNode único es una decisión de diseño con una consecuencia clara: sin alta disponibilidad, es un punto único de falla.</div>
+</section>
+
+<!-- 19 -->
+<section class="slide" data-titulo="YARN" data-grupo="Bloque 3 · Ecosistema Hadoop">
+  <h2>YARN: gestión de recursos y scheduling</h2>
+  <div class="sub">YARN reparte la memoria del clúster en contenedores. Elige cuánta memoria tiene el nodo (como en el paso 7 del taller)</div>
+  <div class="botones"><button class="boton sec" data-mem="4096">4.096 MB</button><button class="boton sec" data-mem="6144">6.144 MB</button></div>
+  <div class="card"><div id="contenedores" style="display:flex;flex-wrap:wrap"></div><p id="yarnTxt"></p></div>
+  <div class="grid g2" style="margin-top:12px">
+    <ul class="p card" style="margin:0"><li><b>ResourceManager:</b> decide qué aplicación recibe qué recursos.</li><li><b>NodeManager:</b> ejecuta las tareas en cada nodo.</li><li><b>ApplicationMaster:</b> uno por aplicación; pide contenedores y coordina sus tareas.</li></ul>
+    <div class="card s-amber"><b>Pregunta para mañana:</b> si con más memoria caben más tareas a la vez, ¿el job siempre termina antes? En el codespace hay 4 núcleos: lo van a medir.</div>
+  </div>
+  <div class="banda">YARN separa los recursos del modelo de procesamiento: por eso Spark puede correr sobre la misma infraestructura que Hadoop.</div>
+</section>
+
+<!-- 20 -->
+<section class="slide" data-titulo="El ecosistema" data-grupo="Bloque 3 · Ecosistema Hadoop">
+  <h2>El ecosistema sobre HDFS y YARN</h2>
+  <div class="sub">Informativo: herramientas que se apoyan en las capas vistas hoy</div>
+  <div class="grid g4">
+    <div class="card" style="text-align:center"><b>MapReduce</b><p>Lotes; escribe a disco entre fases</p></div>
+    <div class="card" style="text-align:center"><b>Hive</b><p>SQL por lotes sobre HDFS</p></div>
+    <div class="card navy" style="text-align:center;color:#fff"><b>Spark</b><p>Spark SQL · MLlib · Structured Streaming</p></div>
+    <div class="card" style="text-align:center"><b>Impala</b><p>SQL interactivo con procesos propios</p></div>
+  </div>
+  <div class="card s-blue" style="margin-top:8px;text-align:center;font-weight:700;color:var(--navy)">YARN — gestión de recursos</div>
+  <div class="card navy" style="margin-top:8px;text-align:center;font-weight:700;color:#fff">HDFS — almacenamiento distribuido</div>
+  <div class="banda amb">Idea para llevarse: el mismo HDFS sirve a motores distintos; elegir motor es elegir entre latencia, tipo de trabajo (lotes, interactivo, iterativo) y costo.</div>
+</section>
+
+<!-- 21 -->
+<section class="slide" data-titulo="Trade-offs de diseño" data-grupo="Bloque 3 · Ecosistema Hadoop">
+  <h2>Trade-offs de diseño: no hay arquitectura gratuita</h2>
+  <div class="sub">Cada decisión de Hadoop compra algo y lo paga con otra cosa</div>
+  <div class="grid trade" style="grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;align-items:center">
+    <b style="text-align:center;color:var(--green)">Lo que se gana</b><b style="text-align:center;color:var(--navy)">Decisión de Hadoop</b><b style="text-align:center;color:var(--red)">Lo que se paga</b>
+    <div class="gana">Mayor tolerancia a fallos</div><div class="dec">Más réplicas</div><div class="paga">Mayor costo de almacenamiento</div>
+    <div class="gana">Arquitectura simple</div><div class="dec">NameNode único</div><div class="paga">Punto único de falla</div>
+    <div class="gana">Tolerancia a fallos robusta</div><div class="dec">Escritura a disco entre fases</div><div class="paga">Menor velocidad</div>
+  </div>
+  <div class="banda">Cada decisión de Hadoop es defendible, y cada una tiene un costo que hay que poder justificar.</div>
+</section>
+
+<!-- 22 -->
+<section class="slide" data-titulo="Cierre y mañana" data-grupo="Cierre">
+  <h2>Cierre del día</h2>
+  <div class="sub">Hoy</div>
+  <div><span class="chip">Escalar</span><span class="chip">Teorema CAP</span><span class="chip">Consistencia</span><span class="chip">Particionamiento y replicación</span><span class="chip">MapReduce</span><span class="chip">HDFS</span><span class="chip">YARN</span><span class="chip">Trade-offs</span></div>
+  <h2 style="margin-top:22px;font-size:24px">Mañana, sábado 31 de octubre, 8:00 a. m.</h2>
+  <div class="grid g4" style="margin-top:10px">
+    <div class="card"><b>1.</b> Abrir el codespace (Preparación Previa hecha)</div>
+    <div class="card"><b>2.</b> Ejecutar y perfilar un job MapReduce real con el mes completo</div>
+    <div class="card"><b>3.</b> Hacer lo mismo con Spark y comparar</div>
+    <div class="card"><b>4.</b> Arranca el Proyecto Final; en la tarde, Kafka y la app de viajes</div>
+  </div>
+  <div class="banda amb">Traer la Preparación Previa hecha: el verificador debe decir «LISTO para el Taller 1». A las 8:00 a. m. no se instala nada.</div>
+</section>
+
+</main>
+
+<div class="pie">
+  <button id="bAnt" aria-label="Diapositiva anterior">← Anterior</button>
+  <span class="num" id="num">1 / 24</span>
+  <button id="bSig" aria-label="Diapositiva siguiente">Siguiente →</button>
+</div>
+
+<script>
+const S=[...document.querySelectorAll('.slide')];let i=0;
+const $=id=>document.getElementById(id);
+function ir(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach((s,k)=>s.classList.toggle('on',k===i));
+  $('num').textContent=(i+1)+' / '+S.length;$('progreso').style.width=((i+1)/S.length*100)+'%';
+  $('escena').scrollTop=0;history.replaceState(null,'','#'+(i+1));
+  document.querySelectorAll('.indice a').forEach((a,k)=>a.classList.toggle('on',k===i));
+  S[i].querySelectorAll('[data-cuenta]').forEach(contar);if(typeof viaje==='function')viaje(S[i].id==='sViaje');}
+// índice
+(function(){let g='',h='<h3>Sesión 1</h3>';S.forEach((s,k)=>{if(s.dataset.grupo!==g){g=s.dataset.grupo;h+='<div class="grupo">'+g+'</div>';}
+  h+='<a href="#'+(k+1)+'" data-k="'+k+'">'+(k+1)+'. '+s.dataset.titulo+'</a>';});$('indice').innerHTML=h;
+  $('indice').addEventListener('click',e=>{const a=e.target.closest('a');if(a){e.preventDefault();ir(+a.dataset.k);$('indice').classList.remove('on');}});})();
+$('bIndice').onclick=()=>$('indice').classList.toggle('on');
+$('bPantalla').onclick=()=>{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();};
+$('bAnt').onclick=()=>ir(i-1);$('bSig').onclick=()=>ir(i+1);
+document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT')return;if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();ir(i+1);}if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();ir(i-1);}});
+let x0=null;$('escena').addEventListener('touchstart',e=>x0=e.touches[0].clientX,{passive:true});
+$('escena').addEventListener('touchend',e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>70)ir(i+(dx<0?1:-1));x0=null;});
+const fmt=n=>n.toLocaleString('es-CO');
+function contar(el){const fin=+el.dataset.cuenta,pre=el.dataset.pre||'';let t0=null;function paso(t){t0=t0||t;const p=Math.min(1,(t-t0)/900);el.textContent=pre+fmt(Math.round(fin*p));if(p<1)requestAnimationFrame(paso);}requestAnimationFrame(paso);}
+
+// 3. cadena
+document.querySelectorAll('#escena .nodo').forEach(b=>b.onclick=()=>{document.querySelectorAll('.nodo').forEach(x=>x.classList.remove('on'));b.classList.add('on');$('detCadena').textContent=b.dataset.d;});
+// 4. objetivo
+const PASOS=['Excel carga como máximo 1.048.576 filas por hoja: el mes tiene 19,9 millones de viajes. pandas cargaría el mes pidiendo unos 11 GB de memoria: en un computador de 16 GB no cabe con holgura. Mañana lo comprueban con el primer millón de viajes.',
+ 'Hadoop guarda el archivo repartido en 31 bloques de 128 MB (HDFS), asigna memoria y núcleos a cada tarea (YARN) y calcula por partes (MapReduce): 31 tareas map en paralelo y un reduce que suma por empresa. Medirán el tiempo y los bytes que viajan por la red (shuffle).',
+ 'Spark hace el mismo cálculo en memoria, con unas pocas líneas equivalentes a SQL, y lee directamente el Parquet oficial (solo las columnas que usa). Compararán: mismo resultado al centavo, distinto tiempo y distintos datos leídos.',
+ 'La pregunta 2 no puede esperar al lote de las 2 a. m.: cada evento del viaje pasa por Kafka y Spark Streaming calcula la espera por zona en ventanas de tiempo. Medirán eventos por segundo y latencia, y comprobarán que una caída no pierde datos.',
+ 'En la nube, BigQuery consulta los 19,9 millones de viajes sin servidores propios y cobra por los datos que lee cada consulta; un tablero lleva la respuesta a la gerencia. Medirán el costo de cada consulta.'];
+document.querySelectorAll('#pasos .paso').forEach(b=>b.onclick=()=>{document.querySelectorAll('#pasos .paso').forEach(x=>x.classList.remove('on'));b.classList.add('on');$('detPaso').textContent=PASOS[+b.dataset.i];});
+// 5. nube
+$('meses').oninput=e=>{const m=+e.target.value,gb=10.8*m;$('mesesTxt').textContent=m+(m>1?' meses':' mes');
+  $('barMem').style.width=Math.min(100,gb/130*100)+'%';$('barMem').textContent=gb.toFixed(1).replace('.',',')+' GB';
+  $('pcTxt').innerHTML='<b>Con el propio computador:</b> '+(gb<=16*0.6?'cabe.':gb<=16?'cabe muy justo: el sistema y los programas abiertos ya usan una parte.':'no cabe: harían falta '+Math.ceil(gb/16)+' computadores de 16 GB.');
+  $('nubeTxt').innerHTML='<b>En la nube:</b> se pide una máquina o un clúster con '+Math.ceil(gb*1.5)+' GB o más, por las horas que dure el análisis, y se devuelve al terminar.';};
+$('meses').dispatchEvent(new Event('input'));
+// 9. escalar
+$('vol').oninput=e=>{const v=+e.target.value;$('volTxt').textContent='×'+v;
+  $('barVert').style.width=Math.min(100,v*10)+'%';$('barVert').style.background=v*10>60?'var(--red)':'var(--navy)';
+  $('vertTxt').textContent=v*10>60?'Pasó el techo: no existe un servidor tan grande, o cuesta demasiado. Y si falla, todo se detiene.':'Alcanza: un servidor más grande procesa el cierre (pero cada salto cuesta más).';
+  $('nodosH').innerHTML=Array.from({length:v},(_,k)=>'<div class="maq" style="min-width:56px;padding:4px">Nodo '+(k+1)+'</div>').join('');
+  $('horTxt').textContent=v+(v>1?' nodos comunes reparten':' nodo procesa')+' el cierre. Si uno falla, los demás siguen; el costo es coordinarlos.';};
+$('vol').dispatchEvent(new Event('input'));
+// 10. CAP
+$('bPartir').onclick=()=>{$('redCAP').style.borderTop='4px dashed var(--red)';$('redCAP').textContent='red partida ✕';$('bCP').disabled=false;$('bAP').disabled=false;};
+$('bCP').onclick=()=>{$('rCP').classList.add('on');$('rAP').classList.remove('on');$('saldo2').textContent='no disponible';};
+$('bAP').onclick=()=>{$('rAP').classList.add('on');$('rCP').classList.remove('on');$('saldo2').textContent='saldo US$ 1.000 (viejo)';};
+// 11. consistencia
+function replicas(v){$('replicas').innerHTML=v.map((x,k)=>'<div class="maq" style="flex:1;min-width:120px">Nodo '+(k+1)+'<br><b style="font-size:22px">'+x+'</b></div>').join('');}
+replicas([100,100,100]);let corriendo=false;
+function escribir(fuerte){if(corriendo)return;corriendo=true;replicas([101,100,100]);
+  $('detCons').textContent='1. Se escribe likes = 101 en el Nodo 1.';
+  setTimeout(()=>{if(fuerte){$('detCons').textContent='2. Espera a que el Nodo 2 y el Nodo 3 confirmen la copia…';setTimeout(()=>{replicas([101,101,101]);$('detCons').textContent='3. Ahora sí responde. Quien lee en el Nodo 3 ve 101: siempre correcto, pero con más espera.';corriendo=false;},1300);}
+    else{$('detCons').textContent='2. Responde de inmediato. Quien lee en el Nodo 3 ve 100 (todavía no llega la copia)…';setTimeout(()=>{replicas([101,101,101]);$('detCons').textContent='3. Un instante después las réplicas convergen: el Nodo 3 ya dice 101. Más disponible, pero un momento desactualizado.';corriendo=false;},1800);}},900);}
+$('bFuerte').onclick=()=>escribir(true);$('bEventual').onclick=()=>escribir(false);
+// 12. particionar
+const PART=[{n:'Nodo 1',p:'P1 · Manhattan',r:'P3 · Queens'},{n:'Nodo 2',p:'P2 · Brooklyn',r:'P1 · Manhattan'},{n:'Nodo 3',p:'P3 · Queens',r:'P2 · Brooklyn'}];let caido=-1;
+function dibPart(){const rep=$('conRep').checked;$('nodosP').innerHTML=PART.map((x,k)=>'<button class="maq'+(k===caido?' caida':'')+'" data-k="'+k+'"><b>'+x.n+(k===caido?' · apagado':'')+'</b><br><span class="bloque b2">'+x.p+'</span>'+(rep?'<br><span class="bloque b1">réplica '+x.r+'</span>':'')+'</button>').join('');
+  document.querySelectorAll('#nodosP .maq').forEach(b=>b.onclick=()=>{caido=caido===+b.dataset.k?-1:+b.dataset.k;dibPart();});
+  if(caido<0){$('detPart').textContent='Todos los nodos funcionan: se pueden consultar los viajes de Manhattan, Brooklyn y Queens.';return;}
+  const perdida=PART[caido].p.split(' · ')[1];
+  $('detPart').textContent=rep?'Se apagó el '+PART[caido].n+': los viajes de '+perdida+' se siguen leyendo desde su réplica en otro nodo. La consulta sigue; el costo es guardar cada dato dos veces.':'Se apagó el '+PART[caido].n+' y no hay réplicas: los viajes de '+perdida+' quedan inaccesibles hasta que el nodo vuelva.';}
+$('conRep').onchange=dibPart;dibPart();
+// 14. Map-Shuffle-Reduce
+const FASES=['Entrada','Map','Shuffle','Reduce','Salida'];let fase=0;
+const ENT=[['Uber',73],['Lyft',24]],ENT2=[['Uber',64],['Uber',31]],ENT3=[['Lyft',18],['Uber',12]];
+function dibMR(){$('faseTxt').textContent=FASES[fase];const bl=[ENT,ENT2,ENT3];
+  const col=(t,c)=>'<div class="zona" style="'+(c?'border:2px solid var(--blue);background:var(--blue-soft)':'')+'"><h4>'+t+'</h4>';
+  let h=col('Entrada (bloques)',fase===0)+bl.map((b,k)=>'<div class="papel">Bloque '+(k+1)+': '+b.map(x=>x[0]+' '+x[1]).join(' · ')+'</div>').join('')+'</div>';
+  h+=col('Map (pares clave, valor)',fase===1)+(fase>=1?bl.map((b,k)=>'<div>mapper '+(k+1)+': '+b.map(x=>'<span class="papel '+x[0].toLowerCase()+'">('+x[0]+', '+x[1]+')</span>').join('')+'</div>').join(''):'<p class="nota">…</p>')+'</div>';
+  h+=col('Shuffle (agrupa por clave)',fase===2)+(fase>=2?'<div class="papel uber">Uber [73, 64, 31, 12]</div><div class="papel lyft">Lyft [24, 18]</div><p class="nota">Cada par viaja por la red al reducer de su clave.</p>':'<p class="nota">…</p>')+'</div>';
+  h+=col('Reduce → Salida',fase>=3)+(fase>=3?'<div class="papel uber">Uber = 180</div><div class="papel lyft">Lyft = 42</div>'+(fase>=4?'<p><b>Salida:</b> una línea por empresa.</p>':''):'<p class="nota">…</p>')+'</div>';
+  $('mrDiag').innerHTML=h;}
+$('bFase').onclick=()=>{fase=Math.min(4,fase+1);dibMR();};$('bFaseR').onclick=()=>{fase=0;dibMR();};dibMR();
+// 15. actividad
+const VIAJES=[[['Uber',73.25],['Uber',64.49],['Lyft',22.44],['Uber',32.99]],[['Uber',57.12],['Uber',19.54],['Lyft',17.90],['Uber',8.84]],[['Uber',8.38],['Uber',28.00],['Lyft',6.40],['Lyft',12.71]]];
+const usd=n=>'US$ '+n.toLocaleString('es-CO',{minimumFractionDigits:2,maximumFractionDigits:2});
+let comb=false;
+function actReset(){comb=false;$('mappers').innerHTML=VIAJES.map((b,k)=>'<div class="zona"><h4>Bloque '+(k+1)+' · mapper '+(k+1)+'</h4><div id="m'+k+'">'+b.map(x=>'<span class="papel">'+x[0]+' '+usd(x[1])+'</span>').join('')+'</div></div>').join('');
+  ['redU','redL','sumU','sumL'].forEach(id=>$(id).innerHTML='');$('aShuffle').disabled=true;$('aReduce').disabled=true;$('aMap').disabled=false;
+  $('detAct').textContent='Pulsa «1. Map»: cada mapper escribe un papel por viaje con (empresa, tarifa).';}
+function hacerMap(){VIAJES.forEach((b,k)=>{let pares=b;if(comb){const s={};b.forEach(x=>s[x[0]]=(s[x[0]]||0)+x[1]);pares=Object.entries(s);}
+  $('m'+k).innerHTML=pares.map(x=>'<span class="papel '+x[0].toLowerCase()+'">('+x[0]+', '+usd(x[1])+')</span>').join('');});
+  $('aMap').disabled=true;$('aShuffle').disabled=false;
+  $('detAct').textContent=comb?'Map con combiner: cada mapper suma primero dentro de su bloque y escribe un solo papel por empresa.':'Map: 12 papeles (empresa, tarifa), uno por viaje.';}
+function hacerShuffle(){let n=0;['redU','redL'].forEach(id=>$(id).innerHTML='');
+  document.querySelectorAll('#mappers .papel').forEach(p=>{n++;const u=p.classList.contains('uber');$(u?'redU':'redL').appendChild(p.cloneNode(true));p.style.opacity=.25;});
+  $('aShuffle').disabled=true;$('aReduce').disabled=false;
+  $('detAct').textContent='Shuffle: viajaron '+n+' papeles por la red, cada uno al reducer de su empresa.'+(comb?' Antes eran 12: el combiner redujo el tráfico a la mitad.':'');}
+function hacerReduce(){let su=0,sl=0;VIAJES.flat().forEach(x=>x[0]==='Uber'?su+=x[1]:sl+=x[1]);
+  $('sumU').textContent='Total Uber: '+usd(su);$('sumL').textContent='Total Lyft: '+usd(sl);$('aReduce').disabled=true;
+  $('detAct').textContent='Reduce: Uber '+usd(su)+' · Lyft '+usd(sl)+'. '+(comb?'Mismo resultado, con la mitad de los papeles.':'Ahora pulsa «4. Repetir con combiner».');}
+$('aMap').onclick=hacerMap;$('aShuffle').onclick=hacerShuffle;$('aReduce').onclick=hacerReduce;
+$('aComb').onclick=()=>{actReset();comb=true;$('detAct').textContent='Con combiner: pulsa «1. Map».';};$('aReset').onclick=actReset;actReset();
+// 16. pasadas
+$('pas').oninput=e=>{const n=+e.target.value;$('pasTxt').textContent=n;
+  $('mrDisco').innerHTML=Array.from({length:n},(_,k)=>'<span class="bloque b2">disco → job '+(k+1)+' → disco</span>').join('');
+  $('mrTxt').textContent=n+' jobs: '+n+' lecturas y '+n+' escrituras a disco.';
+  $('spDisco').innerHTML='<span class="bloque b3">disco</span>'+'<span class="bloque b1">memoria: '+n+' pasadas</span>'+'<span class="bloque b3">disco</span>';
+  $('spTxt').textContent='1 lectura, '+n+' pasadas en memoria y 1 escritura al final.';};
+$('pas').dispatchEvent(new Event('input'));
+// 18. HDFS
+const DN=[['B1','B2'],['B1','B3'],['B2','B3'],['B1','B2','B3']];let dnCaido=-1,nnCaido=false;
+function dibHDFS(){$('dataNodes').innerHTML=DN.map((b,k)=>'<button class="maq'+(k===dnCaido?' caida':'')+'" data-k="'+k+'"><b>DataNode '+(k+1)+(k===dnCaido?' · apagado':'')+'</b><br>'+b.map(x=>'<span class="bloque '+(k===dnCaido||nnCaido?'gris':x==='B1'?'b1':x==='B2'?'b2':'b3')+'">'+x+'</span>').join('')+'</button>').join('');
+  document.querySelectorAll('#dataNodes .maq').forEach(b=>b.onclick=()=>{dnCaido=dnCaido===+b.dataset.k?-1:+b.dataset.k;dibHDFS();});
+  $('bNN').textContent=nnCaido?'Encender el NameNode':'Apagar el NameNode';
+  if(nnCaido){$('detHDFS').textContent='Cae el NameNode: los bloques siguen en los discos, pero nadie sabe dónde está cada uno. HDFS se detiene: es el punto único de falla.';return;}
+  if(dnCaido<0){$('detHDFS').textContent='Los 3 bloques del archivo (B1, B2, B3) están disponibles, cada uno en varias máquinas.';return;}
+  const vivos=['B1','B2','B3'].map(b=>b+' en '+DN.map((x,k)=>k!==dnCaido&&x.includes(b)?'DataNode '+(k+1):null).filter(Boolean).join(' y '));
+  $('detHDFS').textContent='Cae el DataNode '+(dnCaido+1)+': ningún dato se pierde ('+vivos.join('; ')+'). El NameNode ordena recopiar los bloques hasta volver a 3 copias.';}
+$('bNN').onclick=()=>{nnCaido=!nnCaido;dibHDFS();};dibHDFS();
+// 19. YARN
+function yarn(mem){document.querySelectorAll('[data-mem]').forEach(b=>b.classList.toggle('sec',+b.dataset.mem!==mem));
+  const tareas=(mem-2048)/1024;
+  $('contenedores').innerHTML='<span class="cont" style="background:var(--navy);color:#fff">ApplicationMaster · 2.048 MB</span>'+Array.from({length:tareas},(_,k)=>'<span class="cont" style="background:var(--amber-soft);color:var(--amber)">tarea map '+(k+1)+' · 1.024 MB</span>').join('');
+  $('yarnTxt').textContent='Con '+mem.toLocaleString('es-CO')+' MB caben '+tareas+' tareas map a la vez. Las 31 tareas del mes van por tandas de '+tareas+' ('+Math.ceil(31/tareas)+' tandas).';}
+document.querySelectorAll('[data-mem]').forEach(b=>b.onclick=()=>yarn(+b.dataset.mem));yarn(4096);
+
+
+// ---------- recorrido animado de un viaje ----------
+// Decisiones de representación: el «ingreso a la plataforma» es el inicio de sesión en la app; el «servicio» es el viaje;
+// el proceso no termina con el pago sino cuando el viaje llega al tablero de la gerencia (y a la TLC), porque ese es el
+// recorrido del dato que estudia Tecnologías de Procesamiento de Datos. La escena se dibuja a partir de (etapa, avance):
+// pausar, saltar o retroceder siempre deja el dibujo correcto. El ciclo solo corre cuando esta diapositiva está a la vista.
+const viaje=(function(){
+  const E=[
+   {n:'Ingreso',d:3200,txt:'<b>1. Ingreso a la plataforma.</b> María abre la app e inicia sesión. Desde ese momento, cada acción suya es un dato.'},
+   {n:'Solicitud',d:4200,txt:'<b>2. Solicitud del servicio.</b> Marca el destino y pulsa «Pedir viaje». La app publica el evento <i>solicitud</i> (zona, hora) en Kafka.'},
+   {n:'Kafka reparte',d:4000,txt:'<b>3. Kafka guarda y reparte.</b> El evento queda en el tema «viajes» con su número de orden (offset) y lo leen a la vez el emparejamiento y Spark Streaming.'},
+   {n:'Emparejamiento',d:3800,txt:'<b>4. Emparejamiento.</b> Carlos, el conductor más cercano, recibe la oferta y acepta: nuevo evento <i>aceptado</i>. Spark actualiza la espera de la zona.'},
+   {n:'Recogida',d:5000,txt:'<b>5. Recogida.</b> Carlos va por María y la app cuenta los minutos. La espera (de la solicitud a la recogida) es la señal de la tarifa dinámica.'},
+   {n:'Viaje',d:5200,txt:'<b>6. El viaje.</b> María va hacia su destino mientras sube la tarifa base. Eventos <i>recogida</i> y luego <i>fin</i>.'},
+   {n:'Pago',d:4200,txt:'<b>7. Pago.</b> La tarifa se reparte entre Carlos y la plataforma. Esa división, sumada en 19,9 millones de viajes, es la pregunta 1 del caso.'},
+   {n:'Al tablero',d:5200,txt:'<b>8. El dato llega a la gerencia.</b> A las 2 a. m. los viajes del día pasan por lotes a HDFS, se consultan en BigQuery y actualizan el tablero. Cada mes van a la TLC.'}];
+  const EV=[{e:1,t:.62,n:'solicitud',de:'tel'},{e:3,t:.55,n:'aceptado'},{e:4,t:.97,n:'llegada'},{e:5,t:.12,n:'recogida'},{e:5,t:.97,n:'fin'}];
+  const REC=[[400,90],[400,200],[110,200],[110,306]],VIA=[[110,306],[110,390],[400,390]];
+  const KAFKA=[560,72],TEL=[265,300],SPARK=[655,150];
+  const $v=id=>document.getElementById(id),reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let e=0,t=0,play=!reduce,activo=false,ult=null,vel=1;
+  const suave=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2,lerp=(a,b,x)=>a+(b-a)*x,seg=(x,a,b)=>Math.min(1,Math.max(0,(x-a)/(b-a)));
+  function punto(ps,x){let L=[],tot=0;for(let k=1;k<ps.length;k++){const l=Math.hypot(ps[k][0]-ps[k-1][0],ps[k][1]-ps[k-1][1]);L.push(l);tot+=l;}
+    let d=suave(x)*tot;for(let k=0;k<L.length;k++){if(d<=L[k])return[lerp(ps[k][0],ps[k+1][0],d/L[k]),lerp(ps[k][1],ps[k+1][1],d/L[k])];d-=L[k];}return ps[ps.length-1];}
+  const recibido=ev=>e>ev.e||(e===ev.e&&t>=ev.t);
+  function carro(){if(e<4)return REC[0];if(e===4)return punto(REC,t);if(e===5)return punto(VIA,seg(t,.12,.95));return VIA[VIA.length-1];}
+  function vuelo(el,de,a,x){if(x<=0||x>=1){el.setAttribute('opacity',0);return;}
+    el.setAttribute('cx',lerp(de[0],a[0],suave(x)));el.setAttribute('cy',lerp(de[1],a[1],suave(x))-Math.sin(Math.PI*x)*40);el.setAttribute('opacity',1);}
+  const usd=n=>'US$ '+n.toLocaleString('es-CO',{minimumFractionDigits:2,maximumFractionDigits:2});
+  function dibujar(){
+    const c=carro();$v('vCarro').setAttribute('transform','translate('+c[0]+' '+c[1]+')');
+    $v('vBrillo').setAttribute('opacity',e===3?.4+.4*Math.sin(t*20):0);
+    $v('vMaria').setAttribute('opacity',e<5?1:0);
+    $v('vPasajera').setAttribute('opacity',e===5?1:0);
+    $v('vDestino').setAttribute('opacity',e>1||(e===1&&t>.3)?1:.35);
+    const pant=e===0?(t<.6?0:1):e===1?1:e===2?2:e<=4?3:e===5?4:5;
+    document.querySelectorAll('#sViaje .pant').forEach(g=>g.setAttribute('opacity',+g.dataset.p===pant?1:0));
+    $v('vEntrar').setAttribute('fill',e===0&&t>.4&&t<.6?'var(--navy)':'var(--blue)');
+    $v('vDestTxt').textContent='Astoria, Queens'.slice(0,e===1?Math.round(seg(t,.05,.4)*15):15);
+    $v('vPedir').setAttribute('fill',e===1&&t>.5&&t<.62?'var(--navy)':'var(--green)');
+    const r=(t*3)%1;$v('vRadar').setAttribute('r',8+r*30);$v('vRadar').setAttribute('opacity',1-r);
+    $v('vLlega').textContent='llega en '+(e===4?Math.max(1,Math.ceil(5*(1-t))):5)+' min';
+    $v('vTaximetro').textContent=usd(e===5?28*seg(t,.12,.95):e>5?28:0);
+    // Kafka: un bloque por evento recibido, con su offset
+    const rec=EV.filter(recibido);
+    $v('vLog').innerHTML=rec.map((x,k)=>'<rect x="'+(522+k*55)+'" y="54" width="51" height="40" rx="5" fill="var(--amber-soft)" stroke="var(--amber)"/><text class="tx" x="'+(527+k*55)+'" y="70">offset '+k+'</text><text x="'+(527+k*55)+'" y="86" font-size="10" font-weight="700" fill="var(--amber)">'+x.n+'</text>').join('');
+    $v('vKafkaTxt').textContent=rec.length?rec.length+(rec.length>1?' eventos de este viaje, guardados en orden':' evento de este viaje, guardado en orden'):'esperando eventos…';
+    // evento en vuelo hacia Kafka, y Kafka repartiendo a los consumidores (etapa 3)
+    const ev=EV.find(x=>x.e===e&&t>x.t-.3&&t<x.t);
+    vuelo($v('vEv1'),ev&&ev.de==='tel'?TEL:c,KAFKA,ev?seg(t,ev.t-.3,ev.t):0);
+    vuelo($v('vEv2'),[655,96],SPARK,e===2?seg(t,.25,.6):0);vuelo($v('vEv3'),[540,96],REC[0],e===2?seg(t,.35,.85):0);
+    const sp=e>2||(e===2&&t>.6);
+    $v('vSparkTxt').textContent=sp?'Astoria: '+(e>=4?'0 solicitudes pendientes':'1 solicitud pendiente')+' · espera 5,2 min':'sin eventos en la ventana actual';
+    $v('vSparkTxt2').textContent=e>=6?'Ingreso de la empresa en esta ventana: +US$ 28,00':'';
+    // reparto del pago
+    const pg=e>6?1:e===6?seg(t,.3,.85):0;
+    $v('vCond').setAttribute('width',258*.772*seg(pg,0,.6));$v('vPlat').setAttribute('x',526+258*.772);$v('vPlat').setAttribute('width',258*.228*seg(pg,.6,1));
+    $v('vPagoTxt').textContent=pg>0?'Carlos '+usd(28*.772)+' · plataforma '+usd(28*.228):'';
+    // lote nocturno → BigQuery → tablero
+    const lt=e===7?t:0;
+    [['vKafka',!!ev],['vSpark',(e===2&&t>.6)||e===3],['vPago',e===6],['vHdfs',e===7&&lt<.38],['vBq',e===7&&lt>=.33&&lt<.7],['vTablero',e===7&&lt>=.66]]
+      .forEach(([id,on])=>$v(id).classList.toggle('activa',on));
+    const alto=[12,20,16,24];document.querySelectorAll('#vBarras rect').forEach((b,k)=>{const h=alto[k]*seg(lt,.66+k*.05,.86+k*.03);b.setAttribute('height',h);b.setAttribute('y',356-h);});
+    $v('vTlc').setAttribute('opacity',seg(lt,.8,.95));
+    document.querySelectorAll('#vEtapas .etapa').forEach((b,k)=>{b.classList.toggle('on',k===e);b.classList.toggle('hecha',k<e);b.querySelector('.avance').style.width=(k<e?100:k===e?t*100:0)+'%';});
+    if($v('vLeyenda').dataset.e!=e){$v('vLeyenda').dataset.e=e;$v('vLeyenda').innerHTML=E[e].txt;}
+    $v('vPlay').textContent=play?'⏸ Pausa':(e===E.length-1&&t>=1?'↺ Repetir':'▶ Reproducir');}
+  function cuadro(ts){if(!activo){ult=null;return;}
+    if(play&&ult!==null){t+=(ts-ult)*vel/E[e].d;if(t>=1){if(e<E.length-1){e++;t=0;}else{t=1;play=false;}}}
+    ult=play?ts:null;dibujar();requestAnimationFrame(cuadro);}
+  function etapa(k){play=false;e=Math.max(0,Math.min(E.length-1,k));t=1;dibujar();}
+  $v('vEtapas').innerHTML=E.map((x,k)=>'<button class="etapa"><b>'+(k+1)+'</b>'+x.n+'<span class="avance"></span></button>').join('');
+  document.querySelectorAll('#vEtapas .etapa').forEach((b,k)=>b.onclick=()=>etapa(k));
+  $v('vPlay').onclick=()=>{if(e===E.length-1&&t>=1){e=0;t=0;}else if(t>=1&&e<E.length-1){e++;t=0;}play=!play;dibujar();};
+  $v('vAnt').onclick=()=>etapa(e-1);
+  $v('vSig').onclick=()=>etapa(t<1?e:e+1);
+  $v('vReini').onclick=()=>{e=0;t=0;play=!reduce;if(reduce)t=1;dibujar();};
+  $v('vVel').onchange=x=>vel=+x.target.value;
+  if(reduce)t=1;
+  dibujar();
+  return function(on){if(on&&!activo){activo=true;requestAnimationFrame(cuadro);}if(!on)activo=false;};
+})();
+ir(Math.max(0,(parseInt(location.hash.slice(1))||1)-1));
+</script>
+</body>
+</html>
