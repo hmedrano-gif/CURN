@@ -113,6 +113,16 @@ table.t td{border-bottom:1px solid var(--line);padding:8px;vertical-align:top}
 .resp{border-radius:8px;padding:12px 14px;margin-top:8px;font-weight:600;display:none}
 .resp.on{display:block}
 @media(max-width:600px){.tira{display:none}.trade{gap:4px}.trade>*{font-size:12px;padding:6px}}
+/* qué sí, qué no y por qué */
+.regla{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:8px;margin-bottom:8px}
+.regla>div{border-radius:8px;padding:8px 12px;font-size:14px;line-height:1.4}
+.regla .si{background:var(--green-soft);border-left:5px solid var(--green)}
+.regla .no{background:var(--red-soft);border-left:5px solid var(--red)}
+.regla .pq{background:#fff;border:1px solid var(--line)}
+.regla.cabeza>div{background:none;border:0;padding:0 12px;font-weight:700}
+@media(max-width:820px){.regla{grid-template-columns:1fr;gap:4px;margin-bottom:14px}.regla.cabeza{display:none}
+  .regla .si::before{content:"Sí: ";font-weight:700;color:var(--green)}.regla .no::before{content:"No: ";font-weight:700;color:var(--red)}
+  .regla .pq::before{content:"Por qué: ";font-weight:700;color:var(--navy)}}
 /* ---------- recorrido animado de un viaje ---------- */
 .viaje{display:grid;grid-template-columns:230px 1fr;gap:14px}
 @media(max-width:820px){.viaje{grid-template-columns:1fr}}
@@ -368,7 +378,7 @@ table.t td{border-bottom:1px solid var(--line);padding:8px;vertical-align:top}
     <div class="cab navy" style="border-radius:8px;text-align:center">Bloque 3</div>
   </div>
   <div class="grid g4" style="margin-top:12px">
-    <div class="card"><b>5:00–5:30 · Apertura</b><p>El problema del caso, el objetivo del ejercicio, por qué la nube y las herramientas</p></div>
+    <div class="card"><b>5:00–5:30 · Apertura</b><p>El problema del caso, el objetivo del ejercicio, por qué la nube, las herramientas y cómo vamos a trabajar</p></div>
     <div class="card"><b>5:30–6:30 · Procesamiento distribuido</b><p>Escalar, teorema CAP, consistencia, particionamiento y replicación</p></div>
     <div class="card"><b>6:45–8:00 · Modelo MapReduce</b><p>Map → Shuffle → Reduce, la actividad a mano y por qué existe Spark</p></div>
     <div class="card"><b>8:00–9:00 · Ecosistema Hadoop</b><p>HDFS, YARN, el ecosistema y los trade-offs de diseño</p></div>
@@ -391,6 +401,24 @@ table.t td{border-bottom:1px solid var(--line);padding:8px;vertical-align:top}
       <p><b>BigQuery</b><br>SQL sin servidores; costo por bytes procesados</p><p><b>Looker Studio</b><br>Tablero para la gerencia</p><p><b>Spark en Google Cloud</b><br>Dataproc: demostración del docente</p><p><b>AWS y Azure</b><br>Comparativa de servicios</p></div></div>
   </div>
   <p class="nota" style="margin-top:10px">También existen (para ubicarse, no se practican): Databricks · Amazon EMR · Azure Synapse · Snowflake · Cloudera · Apache Flink · Amazon Kinesis · Google Pub/Sub. Los conceptos de hoy sirven para todas.</p>
+</section>
+
+<!-- 7b -->
+<section class="slide" data-titulo="Cómo vamos a trabajar" data-grupo="Apertura">
+  <h2>Cómo vamos a trabajar: qué sí, qué no y por qué</h2>
+  <div class="sub">En la empresa, el analista no construye la plataforma: la usa, la mide y decide con ella</div>
+  <div class="regla cabeza"><div style="color:var(--green)">Sí haremos</div><div style="color:var(--red)">No haremos</div><div style="color:var(--navy)">Por qué</div></div>
+  <div class="regla"><div class="si">Ejecutar con el mes completo los procesos ya preparados</div><div class="no">Instalar Hadoop, Spark o Kafka, ni montar servidores</div><div class="pq">En la empresa eso lo hacen ingeniería de datos o el proveedor de nube; el codespace ya lo trae listo</div></div>
+  <div class="regla"><div class="si"><b>Configurar:</b> cambiar memoria, núcleos o particiones y medir el efecto (RA1, RA4)</div><div class="no">Configurar un clúster desde cero</div><div class="pq">Configurar, aquí, es ajustar un sistema que ya funciona y demostrar con mediciones que mejoró</div></div>
+  <div class="regla"><div class="si">Poner a andar el flujo en tiempo real con la app de viajes y comprobar que no pierde eventos (RA3)</div><div class="no">Programar productores y consumidores desde cero</div><div class="pq">El analista necesita saber si el flujo es confiable y exacto, no escribir su código</div></div>
+  <div class="regla"><div class="si">Leer el código y explicar qué hace cada parte</div><div class="no">Escribir o depurar programas</div><div class="pq">Basta entender cómo trabaja la herramienta para saber qué pedirle y qué esperar de ella</div></div>
+  <div class="regla"><div class="si">Consultar con SQL y armar el tablero (Spark, BigQuery, Looker Studio o Power BI)</div><div class="no">Programar en Java o Scala</div><div class="pq">SQL y el tablero son las herramientas diarias del analista</div></div>
+  <div class="regla"><div class="si">Comparar tiempo, costo y exactitud, y recomendar una tecnología (RA2)</div><div class="no">Memorizar comandos</div><div class="pq">Eso es lo que se evalúa: la decisión justificada con sus propias cifras</div></div>
+  <div class="grid g2" style="margin-top:10px">
+    <div class="card"><b>¿Y el tiempo?</b> Las horas son las mismas. La máquina tarda lo mismo con o sin programar (cada job de Hadoop con el mes completo, entre 2,5 y 4,5 minutos). Lo que no se pierde corrigiendo comillas o sangrías se usa en interpretar y decidir.</div>
+    <div class="card"><b>¿Cómo se trabaja?</b> Cada comando se copia de la guía, un recuadro a la vez. La guía muestra la salida que debe aparecer y qué hacer si algo falla.</div>
+  </div>
+  <div class="banda">Su papel es el de Sofía, la analista: lo que se evalúa es la decisión que toman con los datos, no escribir código.</div>
 </section>
 
 <!-- 8 -->
