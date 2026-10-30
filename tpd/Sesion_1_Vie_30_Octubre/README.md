@@ -14,5 +14,6 @@ Se avanza con las flechas ← → del teclado, con los botones de abajo o desliz
 |---|---|
 | [Presentación en PDF](Presentacion_Sesion_1_30_Octubre.pdf) | La misma presentación, para imprimir o leer sin conexión |
 | [Glosario técnico](Glosario_Tecnico_Tecnologias_Procesamiento_Datos.pdf) | Los términos de Tecnologías de Procesamiento de Datos |
+| [Hoja de ruta del fin de semana](Hoja_de_Ruta_30_y_31_Octubre.pdf) | Qué pregunta resolvemos el 30 y el 31, qué resultado deben ver y qué significa |
 
 **Para el sábado 31:** crea tu cuenta de GitHub en https://github.com/signup y verifica tu correo. La Preparación Previa se hace en clase, a las 8:00 a. m.; su guía está en la [carpeta de la Sesión 2](../Sesion_2_Sab_31_Octubre/).
