@@ -1,6 +1,4 @@
-# CURN · Especialización en Analítica de Datos
-
-Materiales de clase · Universidad Rafael Núñez · Docente: Heyder Medrano
+<a href="https://hmedrano-gif.github.io/CURN/"><img src="portada.svg" alt="CURN · Especialización en Analítica de Datos · Materiales de clase · Entrar a los materiales" width="100%"></a>
 
 ## ▶ [Entrar a los materiales de clase](https://hmedrano-gif.github.io/CURN/)
 
