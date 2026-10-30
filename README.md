@@ -1,13 +1,11 @@
 # CURN · Especialización en Analítica de Datos
 
-Materiales de clase · Universidad Rafael Núñez
+Materiales de clase · Universidad Rafael Núñez · Docente: Heyder Medrano
 
-| Carpeta | Asignatura |
-|---|---|
-| [`tpd/`](tpd/) | Tecnologías de Procesamiento de Datos · 30 y 31 de octubre, 6 y 7 de noviembre |
+## ▶ [Entrar a los materiales de clase](https://hmedrano-gif.github.io/CURN/)
 
-## ▶ [Abrir la presentación de la Sesión 1](https://hmedrano-gif.github.io/CURN/tpd/Sesion_1_Vie_30_Octubre/)
+| Asignatura | Sesiones | Página |
+|---|---|---|
+| Tecnologías de Procesamiento de Datos | 30 y 31 de octubre, 6 y 7 de noviembre | [▶ Abrir](https://hmedrano-gif.github.io/CURN/tpd/) |
 
-**Página de Tecnologías de Procesamiento de Datos:** https://hmedrano-gif.github.io/CURN/tpd/
-
-> Los archivos `index.html` se ven como código aquí en GitHub; para verlos como página usa los enlaces de arriba.
+> Usa los enlaces ▶: abren las páginas de clase, con las presentaciones, las guías y los talleres de cada sesión. Las carpetas de esta página solo guardan esos archivos.
