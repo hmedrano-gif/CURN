@@ -16,7 +16,6 @@ Empieza con una simulación del día completo: lo que van a escribir y lo que va
 
 - **[Taller 1A · Preparación Previa, Hadoop y Spark](https://hmedrano-gif.github.io/CURN/tpd/Sesion_2_Sab_31_Octubre/comandos_taller_1a.html)** (mañana)
 - **[Taller 1B · Kafka, la app de viajes y Spark Streaming](https://hmedrano-gif.github.io/CURN/tpd/Sesion_2_Sab_31_Octubre/comandos_taller_1b.html)** (tarde)
-- **[hmo_solution · el job falla con «addBlock» y aparecen carpetas raras en /caso/input](https://hmedrano-gif.github.io/CURN/tpd/Sesion_2_Sab_31_Octubre/hmo_solution.html)**
 
 > Abre las hojas con estos enlaces. Si haces clic en los archivos `comandos_…html` de la lista de abajo, GitHub muestra su código.
 
