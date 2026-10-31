@@ -12,6 +12,13 @@ Empieza con una simulación del día completo: lo que van a escribir y lo que va
 
 > Si abres aquí el archivo `index.html` verás su código, no la presentación. Usa el enlace de arriba.
 
+## ▶ Hojas de comandos (copiar y pegar, en orden)
+
+- **[Taller 1A · Preparación Previa, Hadoop y Spark](https://hmedrano-gif.github.io/CURN/tpd/Sesion_2_Sab_31_Octubre/comandos_taller_1a.html)** (mañana)
+- **[Taller 1B · Kafka, la app de viajes y Spark Streaming](https://hmedrano-gif.github.io/CURN/tpd/Sesion_2_Sab_31_Octubre/comandos_taller_1b.html)** (tarde)
+
+> Abre las hojas con estos enlaces. Si haces clic en los archivos `comandos_…html` de la lista de abajo, GitHub muestra su código.
+
 | Material | Para qué |
 |---|---|
 | [Presentación en PDF](Presentacion_31_Octubre.pdf) | La misma presentación, para imprimir o leer sin conexión |
