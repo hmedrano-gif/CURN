@@ -85,7 +85,7 @@ footer{padding:28px 0 40px;color:var(--muted);font-size:13px}
 <header><div class="wrap">
   <div class="u">UNIVERSIDAD RAFAEL NÚÑEZ · ESPECIALIZACIÓN EN ANALÍTICA DE DATOS</div>
   <h1>Tecnologías de Procesamiento de Datos</h1>
-  <div style="opacity:.85">3 créditos · 36 horas · 6 sesiones presenciales · 30 y 31 de octubre; 6, 7, 18 y 21 de noviembre</div>
+  <div style="opacity:.85">3 créditos · 36 horas · 6 sesiones presenciales</div>
   <div style="margin-top:6px;font-weight:600">Docente: Heyder Medrano</div>
   <div class="pregunta">¿Dónde y cuándo se gana o se pierde dinero en el transporte por aplicación, y cómo se reacciona a tiempo?</div>
 </div></header>
@@ -161,7 +161,7 @@ footer{padding:28px 0 40px;color:var(--muted);font-size:13px}
     <tr><td>Volumen</td><td><b>Hadoop</b> (HDFS + YARN + MapReduce)</td><td>Reparte el mes en 31 bloques y calcula tarifa, pago y plataforma por empresa con el archivo completo</td><td>Sáb 31 · mañana</td></tr>
     <tr><td>Volumen y tiempo</td><td><b>Spark</b></td><td>El mismo resultado al centavo, en memoria y más rápido; se mide cuánto ahorra cada núcleo</td><td>Sáb 31 · mañana</td></tr>
     <tr><td>Velocidad</td><td><b>Kafka + Spark Streaming</b></td><td>Calcula la espera por zona mientras ocurren los viajes, sin perder un solo evento</td><td>Sáb 31 · tarde</td></tr>
-    <tr><td>Capacidad fija y costo</td><td><b>La nube</b>: BigQuery + Power BI</td><td>Consulta los 19,9 millones de viajes sin servidores propios, pagando por los datos leídos, y lleva la respuesta a la gerencia</td><td>Vie 6 y sáb 7</td></tr>
+    <tr><td>Capacidad fija y costo</td><td><b>La nube</b>: BigQuery + Power BI</td><td>Consulta los 19,9 millones de viajes sin servidores propios, pagando por los datos leídos, y lleva la respuesta a la gerencia</td><td>Sesiones 3 y 4</td></tr>
     <tr><td>Calidad</td><td>Todas</td><td>Reglas de limpieza aplicadas al mes completo, no a una muestra</td><td>Todas las sesiones</td></tr>
   </table></div>
 </div></section>
@@ -189,10 +189,10 @@ footer{padding:28px 0 40px;color:var(--muted);font-size:13px}
   <div class="ruta" id="ruta">
     <button class="ses on" data-s="0"><div class="h" style="background:var(--navy)"><b>Sesión 1</b>Vie 30 oct · 5–9 p. m.</div><div class="c">Unidad 1 · Fundamentos del procesamiento distribuido</div></button>
     <button class="ses" data-s="1"><div class="h" style="background:var(--blue)"><b>Sesión 2</b>Sáb 31 oct · 8 a. m.–4 p. m.</div><div class="c">Taller 1A Hadoop y Spark · Unidad 3 y Taller 1B Kafka</div></button>
-    <button class="ses" data-s="2"><div class="h" style="background:var(--amber)"><b>Sesión 3</b>Vie 6 nov · 5–9 p. m.</div><div class="c">Unidad 2 · La nube · Taller 2A: su mes en BigQuery</div></button>
-    <button class="ses" data-s="3"><div class="h" style="background:var(--green)"><b>Sesión 4</b>Sáb 7 nov · 8 a. m.–4 p. m.</div><div class="c">Taller 2B: dashboard en Power BI · casos · seguridad</div></button>
-    <button class="ses" data-s="4"><div class="h" style="background:#5B4B8A"><b>Sesión 5</b>Mié 18 nov · 4 horas</div><div class="c">Dataproc · Unidad 3: optimización · asesoría</div></button>
-    <button class="ses" data-s="5"><div class="h" style="background:var(--navy)"><b>Sesión 6</b>Sáb 21 nov · 8 a. m.–4 p. m.</div><div class="c">Sustentación del Proyecto Final</div></button>
+    <button class="ses" data-s="2"><div class="h" style="background:var(--amber)"><b>Sesión 3</b>4 horas</div><div class="c">Unidad 2 · La nube · Taller 2A: su mes en BigQuery</div></button>
+    <button class="ses" data-s="3"><div class="h" style="background:var(--green)"><b>Sesión 4</b>8 horas</div><div class="c">Taller 2B: dashboard en Power BI · casos · seguridad</div></button>
+    <button class="ses" data-s="4"><div class="h" style="background:#5B4B8A"><b>Sesión 5</b>4 horas</div><div class="c">Dataproc · Unidad 3: optimización · asesoría</div></button>
+    <button class="ses" data-s="5"><div class="h" style="background:var(--navy)"><b>Sesión 6</b>8 horas</div><div class="c">Sustentación del Proyecto Final</div></button>
   </div>
   <div class="detalle" id="detSes"></div>
 </div></section>
@@ -202,11 +202,11 @@ footer{padding:28px 0 40px;color:var(--muted);font-size:13px}
   <p class="sub">Estrategias del contenido programático de Tecnologías de Procesamiento de Datos</p>
   <div class="tabla"><table class="t">
     <tr><th>Estrategia</th><th>Qué se evalúa</th><th>Arranca</th><th>Se sustenta</th></tr>
-    <tr><td><b>Proyecto final</b>: diseño y configuración de un sistema distribuido</td><td>Cada grupo procesa un mes de 2025 en BigQuery y lo lleva a Power BI; configuración, integración de datos (iguales a la clave al centavo) y rendimiento y costos (Hadoop, Spark, BigQuery)</td><td>Sáb 31 oct</td><td>Sáb 21 nov</td></tr>
+    <tr><td><b>Proyecto final</b>: diseño y configuración de un sistema distribuido</td><td>Cada grupo procesa un mes de 2025 en BigQuery y lo lleva a Power BI; configuración, integración de datos (iguales a la clave al centavo) y rendimiento y costos (Hadoop, Spark, BigQuery)</td><td>Sáb 31 oct</td><td>Sesión 6</td></tr>
     <tr><td><b>Taller práctico</b>: flujos de datos en tiempo real con Spark</td><td>Que el flujo funcione, que no pierda eventos y que sus cifras sean exactas</td><td>Sáb 31, tarde</td><td>En el taller</td></tr>
-    <tr><td><b>Análisis de casos</b>: selección de tecnologías para un problema empresarial</td><td>Matriz de selección de nube y presentación técnica que justifique la solución, su costo y sus beneficios</td><td>Sáb 7, 1:30 p. m.</td><td>Sáb 7 y en el informe</td></tr>
-    <tr><td><b>Simulación</b>: procesamiento de datos masivos en la nube</td><td>Su mes en BigQuery: configuración del entorno, costo de cada consulta y análisis de resultados (Taller 2A)</td><td>Vie 6, 6:20 p. m.</td><td>En el taller y el 21</td></tr>
-    <tr><td><b>Configuración y monitoreo</b> de un pipeline de datos masivos</td><td>Se demuestra en la sustentación: ejecución en vivo y lectura de sus métricas</td><td>—</td><td>Sáb 21 nov</td></tr>
+    <tr><td><b>Análisis de casos</b>: selección de tecnologías para un problema empresarial</td><td>Matriz de selección de nube y presentación técnica que justifique la solución, su costo y sus beneficios</td><td>Sesión 4</td><td>Sesión 4 y en el informe</td></tr>
+    <tr><td><b>Simulación</b>: procesamiento de datos masivos en la nube</td><td>Su mes en BigQuery: configuración del entorno, costo de cada consulta y análisis de resultados (Taller 2A)</td><td>Sesión 3</td><td>En el taller y en la Sesión 6</td></tr>
+    <tr><td><b>Configuración y monitoreo</b> de un pipeline de datos masivos</td><td>Se demuestra en la sustentación: ejecución en vivo y lectura de sus métricas</td><td>—</td><td>Sesión 6</td></tr>
   </table></div>
 </div></section>
 
@@ -225,13 +225,13 @@ footer{padding:28px 0 40px;color:var(--muted);font-size:13px}
 <section id="empezar" style="border-bottom:0"><div class="wrap">
   <h2>Para empezar</h2>
   <div class="grid g2">
-    <div class="card"><h3>Sesión 3 · viernes 6 de noviembre, 5:00 p. m.</h3><p>Traigan su cuenta de Google y tengan a mano el mes de su grupo: Grupo 1 enero, Grupo 2 abril, Grupo 3 septiembre y Grupo 4 diciembre de 2025.</p>
+    <div class="card"><h3>Sesión 3</h3><p>Traigan su cuenta de Google y tengan a mano el mes de su grupo: Grupo 1 enero, Grupo 2 abril, Grupo 3 septiembre y Grupo 4 diciembre de 2025.</p>
       <a class="boton" href="Sesion_3_Vie_6_Noviembre/">Abrir la Sesión 3 →</a> <a class="boton" href="Sesion_3_Vie_6_Noviembre/Taller_2A_BigQuery.html">Taller 2A →</a> <a class="boton" href="Sesion_3_Vie_6_Noviembre/Proyecto_Final_v2.html">Proyecto Final →</a></div>
-    <div class="card"><h3>Sesión 4 · sábado 7 de noviembre, 8:00 a. m.</h3><p>Traigan Power BI Desktop instalado (gratis en Microsoft Store) y la misma cuenta de Google de BigQuery.</p>
+    <div class="card"><h3>Sesión 4</h3><p>Traigan Power BI Desktop instalado (gratis en Microsoft Store) y la misma cuenta de Google de BigQuery.</p>
       <a class="boton" href="Sesion_4_Sab_7_Noviembre/">Abrir la Sesión 4 →</a> <a class="boton" href="Sesion_4_Sab_7_Noviembre/Taller_2B_PowerBI.html">Taller 2B →</a></div>
     <div class="card"><h3>Sesiones 1 y 2 · 30 y 31 de octubre</h3><p>Fundamentos, Hadoop, Spark y Kafka: sus mediciones son la base del informe.</p>
       <a class="boton" href="Sesion_1_Vie_30_Octubre/">Sesión 1 →</a> <a class="boton" href="Sesion_2_Sab_31_Octubre/">Sesión 2 →</a></div>
-    <div class="card"><h3>Sesiones 5 y 6 · 18 y 21 de noviembre</h3><p>Dataproc y optimización; luego la sustentación del Proyecto Final. El material nuevo se abre con la clave que da el docente en clase.</p>
+    <div class="card"><h3>Sesiones 5 y 6</h3><p>Dataproc y optimización; luego la sustentación del Proyecto Final. El material nuevo se abre con la clave que da el docente en clase.</p>
       <a class="boton" href="Sesion_5_Mie_18_Noviembre/">Sesión 5 →</a> <a class="boton" href="Sesion_6_Sab_21_Noviembre/">Sesión 6 →</a></div>
   </div>
 </div></section>
@@ -270,28 +270,28 @@ const SES=[
   ['Tarde','Taller 1B: la app de viajes publica en Kafka; Spark Streaming calcula la espera por zona y el ingreso por empresa minuto a minuto; se apaga Kafka y se comprueba que no se pierde nada'],
   ['Te llevas','Tus propias mediciones: cuánto tarda cada tecnología y por qué'],
   ['Competencia y RA','<span class="chip">C1 · RA1</span> <b>Taller 1A:</b> configura Hadoop y Spark y procesa el mes completo (19,9 millones de viajes) con cifras exactas<br><span class="chip">C4 · RA4</span> <b>Taller 1A:</b> ajusta la memoria de YARN y los núcleos de Spark y mide cuánto baja el tiempo<br><span class="chip">C3 · RA3</span> <b>Taller 1B:</b> desarrolla un flujo en tiempo real con Kafka y Spark Streaming que no pierde eventos y da cifras exactas']]},
- {c:'var(--amber)',t:'Sesión 3 · Viernes 6 de noviembre · 5:00–9:00 p. m. · Unidad 2',f:[
+ {c:'var(--amber)',t:'Sesión 3 · 4 horas · Unidad 2',f:[
   ['Pregunta','¿Qué cambia cuando el mismo cálculo se hace en la nube, y cuánto cuesta?'],
   ['5:15–6:10','La nube (NIST), AWS, Google Cloud y Azure frente a frente; demostración de Dataproc en la consola'],
   ['6:20–8:30','Taller 2A: cada grupo divide su mes de 2025 en Colab, lo carga en BigQuery (zona de pruebas, sin tarjeta) y responde las 8 preguntas en SQL, idénticas a Hadoop y Spark'],
   ['8:30–8:50','Optimización de costos: BigQuery cobra por bytes leídos (SELECT * frente a dos columnas)'],
   ['Te llevas','Su mes en la nube, las 8 respuestas y su costo'],
   ['Competencia y RA','<span class="chip">C2 · RA2</span> <b>Taller 2A:</b> selecciona e integra un servicio de nube (BigQuery) para cargar y analizar su mes, justificando cada configuración y el costo de cada consulta']]},
- {c:'var(--green)',t:'Sesión 4 · Sábado 7 de noviembre · 8:00 a. m.–4:00 p. m. · Unidad 2',f:[
+ {c:'var(--green)',t:'Sesión 4 · 8 horas · Unidad 2',f:[
   ['Pregunta','¿Cómo se convierten 20 millones de viajes en decisiones para la gerencia?'],
   ['Mañana','Taller 2B: modelo en estrella en BigQuery, Power BI conectado, 15 medidas DAX y un dashboard de 3 páginas con su mes'],
   ['1:30–2:45','Análisis de casos: qué nube elegir para una empresa (matriz de selección)'],
   ['2:45–3:30','Seguridad y normativa: permisos, GDPR, ISO/IEC 27001 y Ley 1581 de 2012'],
   ['Te llevas','Un dashboard profesional y la decisión de nube justificada'],
   ['Competencia y RA','<span class="chip">C2 · RA2</span> <b>Taller 2B y análisis de casos:</b> integra BigQuery con Power BI y analiza su mes en un dashboard; elige entre AWS, Google Cloud y Azure con criterios de costo, seguridad y normativa']]},
- {c:'#5B4B8A',t:'Sesión 5 · Miércoles 18 de noviembre · 4 horas · Unidades 2 y 3',f:[
+ {c:'#5B4B8A',t:'Sesión 5 · 4 horas · Unidades 2 y 3',f:[
   ['Pregunta','¿Qué cambia cuando el clúster lo administra Google, y qué ajustes mejoran el rendimiento?'],
   ['Dataproc','Del codespace a Dataproc; el laboratorio GSP104 de Google Skills explicado comando por comando (crear, ejecutar, escalar y borrar); la consola y el costo por hora'],
   ['Optimización','Cinco palancas medidas en el seminario: combiner, memoria de YARN, Parquet, núcleos de Spark y columnas en BigQuery; dónde mirar las métricas'],
   ['Asesoría','Cada grupo muestra su dashboard y su informe'],
   ['Te llevas','La comparación clúster propio, clúster administrado y sin servidor, y la sección de rendimiento del informe'],
   ['Competencia y RA','<span class="chip">C1 · RA1</span> <b>Dataproc:</b> compara el clúster que configuró en el codespace con un clúster administrado<br><span class="chip">C2 · RA2</span> <b>Dataproc:</b> decide entre clúster propio, clúster administrado y servicio sin servidor<br><span class="chip">C4 · RA4</span> <b>Unidad 3:</b> cinco ajustes medidos (combiner, memoria de YARN, Parquet, núcleos de Spark y columnas en BigQuery) y su efecto en tiempo y costo']]},
- {c:'var(--navy)',t:'Sesión 6 · Sábado 21 de noviembre · 8:00 a. m.–4:00 p. m.',f:[
+ {c:'var(--navy)',t:'Sesión 6 · 8 horas',f:[
   ['Mañana','Sustentación del Proyecto Final: 15 minutos por grupo, con el dashboard en vivo y una consulta con su costo'],
   ['Tarde','Comparación de los cinco meses de Nueva York y cierre del seminario'],
   ['Se entrega','Informe técnico (6 a 8 páginas) y el dashboard (.pbix)'],
