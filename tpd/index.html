@@ -212,12 +212,12 @@ footer{padding:28px 0 40px;color:var(--muted);font-size:13px}
 
 <section id="formacion"><div class="wrap">
   <h2>Lo que te llevas</h2>
-  <p class="sub">Formación de analista que decide con evidencia de tiempo, costo y exactitud</p>
+  <p class="sub">Las cuatro competencias del seminario y su resultado de aprendizaje (contenido programático)</p>
   <div class="grid g4">
-    <div class="card"><span class="chip">RA1</span><h3>Configurar</h3><p>Un sistema Hadoop o Spark que procesa un mes completo de datos masivos.</p></div>
-    <div class="card"><span class="chip">RA2</span><h3>Seleccionar</h3><p>La herramienta de nube adecuada (AWS, Azure o Google Cloud) con criterios de costo, seguridad y normativa.</p></div>
-    <div class="card"><span class="chip">RA3</span><h3>Desarrollar</h3><p>Un flujo de datos en tiempo real con Kafka que no pierde eventos.</p></div>
-    <div class="card"><span class="chip">RA4</span><h3>Ajustar</h3><p>Memoria, núcleos y particiones para bajar tiempos y costos, y demostrarlo con mediciones.</p></div>
+    <div class="card"><span class="chip">C1 · RA1</span><h3>Configurar</h3><p><b>Competencia:</b> Diseñar sistemas distribuidos y escalables para el procesamiento eficiente de datos masivos.</p><p><b>Resultado de aprendizaje:</b> Configurar un sistema Hadoop o Spark para procesar un conjunto de datos masivos, asegurando eficiencia y escalabilidad.</p><p style="color:var(--muted,#5b6575);font-size:14px"><b>Dónde se trabaja:</b> Taller 1A (Hadoop y Spark) y Dataproc.</p></div>
+    <div class="card"><span class="chip">C2 · RA2</span><h3>Seleccionar</h3><p><b>Competencia:</b> Evaluar herramientas y servicios en la nube para el procesamiento y almacenamiento de big data.</p><p><b>Resultado de aprendizaje:</b> Seleccionar las herramientas adecuadas, como AWS o Google Cloud, para integrar y analizar datos masivos.</p><p style="color:var(--muted,#5b6575);font-size:14px"><b>Dónde se trabaja:</b> Talleres 2A (BigQuery) y 2B (Power BI) y análisis de casos.</p></div>
+    <div class="card"><span class="chip">C3 · RA3</span><h3>Desarrollar</h3><p><b>Competencia:</b> Crear flujos de procesamiento en tiempo real utilizando tecnologías avanzadas de big data.</p><p><b>Resultado de aprendizaje:</b> Desarrollar un flujo de datos en tiempo real utilizando herramientas como Apache Kafka, garantizando su funcionalidad y precisión.</p><p style="color:var(--muted,#5b6575);font-size:14px"><b>Dónde se trabaja:</b> Taller 1B (Kafka y Spark Streaming).</p></div>
+    <div class="card"><span class="chip">C4 · RA4</span><h3>Ajustar</h3><p><b>Competencia:</b> Optimizar el rendimiento de sistemas de procesamiento de datos mediante técnicas avanzadas.</p><p><b>Resultado de aprendizaje:</b> Ajustar configuraciones y parámetros de sistemas distribuidos para mejorar su rendimiento y reducir tiempos de procesamiento.</p><p style="color:var(--muted,#5b6575);font-size:14px"><b>Dónde se trabaja:</b> Taller 1A (memoria y núcleos), costo en BigQuery y Unidad 3.</p></div>
   </div>
   <div class="banda">Al terminar, podrás sentarte con una gerencia y decir: esta pregunta se responde con esta tecnología, tarda tanto, cuesta tanto y por esta razón.</div>
 </div></section>
@@ -262,40 +262,40 @@ const SES=[
   ['6:45–8:00','Modelo MapReduce: actividad a mano con 12 viajes reales, combiner y por qué existe Spark'],
   ['8:00–9:00','Ecosistema Hadoop: HDFS, YARN y los trade-offs de diseño'],
   ['Te llevas','El marco para evaluar cualquier arquitectura de datos'],
-  ['Trabaja','<span class="chip">RA1</span> fundamentos']]},
+  ['Competencia y RA','<span class="chip">C1 · RA1</span> <b>Unidad 1:</b> base para configurar Hadoop o Spark: por qué se reparte el trabajo, cómo lo hace MapReduce y qué hacen HDFS y YARN']]},
  {c:'var(--blue)',t:'Sesión 2 · Sábado 31 de octubre · 8:00 a. m.–4:00 p. m. · Unidades 1 y 3',f:[
   ['Pregunta','Pregunta 1 con el mes completo, y pregunta 2 mientras ocurre'],
   ['Mañana','Taller 1A en GitHub Codespaces: el mes en HDFS (31 bloques), job MapReduce de tarifa, pago y plataforma por empresa; YARN con más memoria; el mismo cálculo en Spark con 1, 2 y 4 núcleos; comparar tiempos'],
   ['11:00–11:30','Arranca el Proyecto Final'],
   ['Tarde','Taller 1B: la app de viajes publica en Kafka; Spark Streaming calcula la espera por zona y el ingreso por empresa minuto a minuto; se apaga Kafka y se comprueba que no se pierde nada'],
   ['Te llevas','Tus propias mediciones: cuánto tarda cada tecnología y por qué'],
-  ['Trabaja','<span class="chip">RA1</span> <span class="chip">RA3</span> <span class="chip">RA4</span>']]},
+  ['Competencia y RA','<span class="chip">C1 · RA1</span> <b>Taller 1A:</b> configura Hadoop y Spark y procesa el mes completo (19,9 millones de viajes) con cifras exactas<br><span class="chip">C4 · RA4</span> <b>Taller 1A:</b> ajusta la memoria de YARN y los núcleos de Spark y mide cuánto baja el tiempo<br><span class="chip">C3 · RA3</span> <b>Taller 1B:</b> desarrolla un flujo en tiempo real con Kafka y Spark Streaming que no pierde eventos y da cifras exactas']]},
  {c:'var(--amber)',t:'Sesión 3 · Viernes 6 de noviembre · 5:00–9:00 p. m. · Unidad 2',f:[
   ['Pregunta','¿Qué cambia cuando el mismo cálculo se hace en la nube, y cuánto cuesta?'],
   ['5:15–6:10','La nube (NIST), AWS, Google Cloud y Azure frente a frente; demostración de Dataproc en la consola'],
   ['6:20–8:30','Taller 2A: cada grupo divide su mes de 2025 en Colab, lo carga en BigQuery (zona de pruebas, sin tarjeta) y responde las 8 preguntas en SQL, idénticas a Hadoop y Spark'],
   ['8:30–8:50','Optimización de costos: BigQuery cobra por bytes leídos (SELECT * frente a dos columnas)'],
   ['Te llevas','Su mes en la nube, las 8 respuestas y su costo'],
-  ['Trabaja','<span class="chip">RA2</span>']]},
+  ['Competencia y RA','<span class="chip">C2 · RA2</span> <b>Taller 2A:</b> selecciona e integra un servicio de nube (BigQuery) para cargar y analizar su mes, justificando cada configuración y el costo de cada consulta']]},
  {c:'var(--green)',t:'Sesión 4 · Sábado 7 de noviembre · 8:00 a. m.–4:00 p. m. · Unidad 2',f:[
   ['Pregunta','¿Cómo se convierten 20 millones de viajes en decisiones para la gerencia?'],
   ['Mañana','Taller 2B: modelo en estrella en BigQuery, Power BI conectado, 15 medidas DAX y un dashboard de 3 páginas con su mes'],
   ['1:30–2:45','Análisis de casos: qué nube elegir para una empresa (matriz de selección)'],
   ['2:45–3:30','Seguridad y normativa: permisos, GDPR, ISO/IEC 27001 y Ley 1581 de 2012'],
   ['Te llevas','Un dashboard profesional y la decisión de nube justificada'],
-  ['Trabaja','<span class="chip">RA2</span>']]},
+  ['Competencia y RA','<span class="chip">C2 · RA2</span> <b>Taller 2B y análisis de casos:</b> integra BigQuery con Power BI y analiza su mes en un dashboard; elige entre AWS, Google Cloud y Azure con criterios de costo, seguridad y normativa']]},
  {c:'#5B4B8A',t:'Sesión 5 · Miércoles 18 de noviembre · 4 horas · Unidades 2 y 3',f:[
   ['Pregunta','¿Qué cambia cuando el clúster lo administra Google, y qué ajustes mejoran el rendimiento?'],
   ['Dataproc','Del codespace a Dataproc; el laboratorio GSP104 de Google Skills explicado comando por comando (crear, ejecutar, escalar y borrar); la consola y el costo por hora'],
   ['Optimización','Cinco palancas medidas en el seminario: combiner, memoria de YARN, Parquet, núcleos de Spark y columnas en BigQuery; dónde mirar las métricas'],
   ['Asesoría','Cada grupo muestra su dashboard y su informe'],
   ['Te llevas','La comparación clúster propio, clúster administrado y sin servidor, y la sección de rendimiento del informe'],
-  ['Trabaja','<span class="chip">RA1</span> <span class="chip">RA2</span> <span class="chip">RA4</span>']]},
+  ['Competencia y RA','<span class="chip">C1 · RA1</span> <b>Dataproc:</b> compara el clúster que configuró en el codespace con un clúster administrado<br><span class="chip">C2 · RA2</span> <b>Dataproc:</b> decide entre clúster propio, clúster administrado y servicio sin servidor<br><span class="chip">C4 · RA4</span> <b>Unidad 3:</b> cinco ajustes medidos (combiner, memoria de YARN, Parquet, núcleos de Spark y columnas en BigQuery) y su efecto en tiempo y costo']]},
  {c:'var(--navy)',t:'Sesión 6 · Sábado 21 de noviembre · 8:00 a. m.–4:00 p. m.',f:[
   ['Mañana','Sustentación del Proyecto Final: 15 minutos por grupo, con el dashboard en vivo y una consulta con su costo'],
   ['Tarde','Comparación de los cinco meses de Nueva York y cierre del seminario'],
   ['Se entrega','Informe técnico (6 a 8 páginas) y el dashboard (.pbix)'],
-  ['Trabaja','<span class="chip">RA1</span> <span class="chip">RA2</span> <span class="chip">RA3</span> <span class="chip">RA4</span>']]}];
+  ['Competencia y RA','<span class="chip">C1 · RA1</span> <span class="chip">C2 · RA2</span> <span class="chip">C3 · RA3</span> <span class="chip">C4 · RA4</span> El Proyecto Final evidencia los cuatro: RA1, configuración del entorno; RA2, integración y análisis en la nube; RA3, flujo en tiempo real del Taller 1B; RA4, rendimiento y costos medidos']]}];
 function ses(k){document.querySelectorAll('.ses').forEach(b=>b.classList.toggle('on',+b.dataset.s===k));
   const s=SES[k];$('detSes').style.borderLeftColor=s.c;
   $('detSes').innerHTML='<h3>'+s.t+'</h3><table>'+s.f.map(r=>'<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>').join('')+'</table>';}
